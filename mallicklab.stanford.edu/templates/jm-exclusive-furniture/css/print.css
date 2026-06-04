@@ -1,0 +1,18 @@
+/*--------------------------------------------------------------
+# Copyright (C) joomla-monster.com
+# License: http://www.joomla-monster.com/license.html Joomla-Monster Proprietary Use License
+# Website: http://www.joomla-monster.com
+# Support: info@joomla-monster.com
+---------------------------------------------------------------*/
+
+/* ==========================================================================
+   PRINT PAGE styles
+   ========================================================================== */
+
+body.contentpane {
+	padding: 20px;
+}
+
+.content_rating {
+  margin: 0 0 20px;
+}

@@ -1,0 +1,113 @@
+
+body {
+	color:#2a2a2a;
+	font-family: Arial, Helvetica, sans-serif;	font-size: 14px;
+}
+
+.dj-image-hover {
+	color:#2a2a2a;
+}
+
+.container-fluid {
+		max-width: 962px;
+	}
+
+	#jm-bar-in,
+	#jm-header,
+	#jm-breadcrumbs-fontswitcher,
+	#jm-top1,
+	#jm-top2,
+	#jm-main,
+	#jm-bottom,
+	#jm-footer {
+		padding-left: 25px;
+		padding-right: 25px;
+	}
+
+	
+
+			.lcr.scheme3 #jm-content {
+	    margin-right: 25.649688149688% !important; 
+	    margin-left: -128.24844074844% !important;
+	}
+	.lrc.scheme3 #jm-content,
+	.lrc.scheme2 #jm-content,
+	.lcr.scheme2.noright #jm-content {
+		margin-left: 2.5987525987526%;
+	}
+	
+
+@media (min-width: 768px) and (max-width: 979px) {
+							.lcr.scheme3 #jm-content {
+		    margin-right: 25.690607734807% !important; 
+		    margin-left: -128.45303867403% !important;
+		}
+		.lrc.scheme3 #jm-content,
+		.lrc.scheme2 #jm-content,
+		.lcr.scheme2.noright #jm-content {
+			margin-left: 2.7624309392265%;
+		}
+				
+		
+}
+	
+
+.jm-module h3.jm-title {
+	font-family: 'Lato', sans-serif;	font-size: 38px;
+}
+
+.dj-main li a.dj-up_a {
+	font-family: 'Lato', sans-serif;	font-size: 19px;
+}
+
+.page-header h2,
+h2.item-title,
+h2 span.subheading-category,
+.cat-children > h3,
+.page-header > h1,
+h2 span.subheading-category,
+.contact-category > h2,
+.blog-featured > h1,
+.weblink-category > h2,
+.newsfeed > h2,
+.newsfeed-category > h2,
+.tag-category h2 {
+	font-family: 'Lato', sans-serif;	font-size: 38px;
+}
+
+
+h1#jm-logo,
+#djcatalog h3.djc_related_title,
+#djcatalog .djc_title h3,
+#djcatalog h2.djc_title,
+#djcatalog .djc_td_title,
+.catalog-ms .djf_mod .djf_desc,
+.catalog-ms .djf_mod a.readon,
+.djc_items .djc_title h4,
+.btn,
+.catalog-ms .djf_mod a.btn,
+body .djf_mod .djf_text h3,
+#djcatalog.djc_item .djc_files h3,
+#djcatalog.djc_item .djc_comments h3,
+span.dj-tab-in span,
+.dj-slide-desc-text,
+.font-module,
+#djmediatools .dj-cat-title {
+    font-family: 'Lato', sans-serif;}
+
+#djcatalog h3.djc_related_title,
+#djcatalog .djc_title h3,
+#djcatalog h2.djc_title,
+body .djf_mod .djf_text h3,
+#djcatalog.djc_item .djc_files h3,
+#djcatalog.djc_item .djc_comments h3,
+#djmediatools .dj-cat-title {
+    font-size: 38px;
+}
+
+.djc_items .djc_title h4 a,
+#djcatalog .djc_title h3 a,
+.djf_mod .djf_text h3 a,
+#djcatalog .djc_items_table .djc_td_title a {
+	color:#2a2a2a;	
+}
