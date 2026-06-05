@@ -298,6 +298,7 @@ window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('
 .pub-entry.pub-highlighted { background-color: #fbf7dc; border-left-color: #ebac00; }
 .pub-entry.pub-featured { background-color: #e8f6fd; border-left-color: #00aeef; }
 .pub-entry.pub-preprint { background: #f8f8f8; border-left-color: #bbb; }
+.pub-entry.pub-inpress { background: #f5fbf5; border-left-color: #66bb6a; }
 
 .pub-title-text {
   display: block; font-weight: 600; font-size: 0.875em; margin-bottom: 2px;
@@ -329,6 +330,7 @@ window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('
 .pub-badge-featured { background: #e8f6fd; color: #0077b3; border: 1px solid #00aeef; }
 .pub-badge-highlighted { background: #fbf7dc; color: #8a6400; border: 1px solid #ebac00; }
 .pub-badge-preprint { background: #f0f0f0; color: #555; border: 1px solid #bbb; }
+.pub-badge-inpress { background: #f0f9f0; color: #2e7d32; border: 1px solid #66bb6a; }
 
 .pub-links { margin-top: 4px; display: flex; gap: 10px; flex-wrap: wrap; }
 .pub-link {
@@ -442,6 +444,7 @@ window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('
     const hlClass = p.highlight === 'featured' ? 'pub-featured'
                   : p.highlight === 'highlighted' ? 'pub-highlighted'
                   : p.status === 'preprint' ? 'pub-preprint'
+                  : p.status === 'in_press' ? 'pub-inpress'
                   : 'pub-normal';
 
     // Title with optional DOI link
@@ -460,6 +463,7 @@ window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('
     if (!isFeaturedSection && p.highlight === 'featured') badges.push(`<span class="pub-badge pub-badge-featured">★ Selected</span>`);
     if (!isFeaturedSection && p.highlight === 'highlighted') badges.push(`<span class="pub-badge pub-badge-highlighted">◆</span>`);
     if (p.status === 'preprint') badges.push(`<span class="pub-badge pub-badge-preprint">Preprint</span>`);
+    if (p.status === 'in_press') badges.push(`<span class="pub-badge pub-badge-inpress">In Press</span>`);
 
     // Links
     const links = [];
