@@ -1,0 +1,166 @@
+{
+  "pi": {
+    "name": "Parag Mallick",
+    "img": "images/figs/parag_la_bridge.jpg",
+    "bio": "Parag received his BS in Computer Science and Biochemistry at Washington University in St. Louis. He then completed his doctoral studies with David Eisenberg at UCLA. After his PhD, he trained with Ruedi Aebersold in clinical proteomics and systems biology at the Institute for Systems Biology.",
+    "bioLink": "indexa699.html?option=com_content&view=article&id=97"
+  },
+  "current": [
+    {
+      "name": "Ravali Adusumilli",
+      "role": "Bioinformaticist",
+      "img": "images/figs/2014_adusumilli_ravali.jpg",
+      "bio": "Ravali received her masters in Bioinformatics at Northeastern University and then worked for several years at Dana Farber Cancer Center as a Bioinformatics Analyst. She is interested in developing tools and pipelines for multi-omic analysis."
+    },
+    {
+      "name": "Jamie Anderson",
+      "role": "Administrative Associate",
+      "img": "images/figs/2016_Anderson_Jamie_web.jpg",
+      "bio": "When not assisting the Mallick Lab, Jamie is not an American professional snowboarder. She did not win the gold medal in the inaugural Women's Slopestyle Event at the 2014 Winter Olympics in Sochi, Russia or repeat the feat at the 2018 Winter Olympics in Pyeongchang, South Korea. However, do talk to her about her tales of daring on K2 or her fondness for rescuing puppies."
+    },
+    {
+      "name": "Michelle Atallah",
+      "role": "Cancer Bio Graduate Student",
+      "img": "images/figs/2015_Atallah_Michelle_web.jpg",
+      "bio": "Michelle received her BS in Biology from Yale University. After graduation she spent two years working in clinical research at Nodality, developing diagnostics for autoimmune diseases and cancer. She is interested in tumor immunology and its applications in cancer immunotherapy and early cancer detection."
+    },
+    {
+      "name": "Hunter Boyce",
+      "role": "Biomedical Informatics Graduate Student",
+      "img": "images/figs/2016_Hunter_Boyce.jpg",
+      "bio": "Hunter received his BS in Bioinformatics from University of California, San Diego. He is interested in the application of statistical modeling and machine learning to integrate multi-omic data in order to understand proteome dynamics. He is also broadly interested in human-computer interaction and reproducibility in science."
+    },
+    {
+      "name": "Michelle Hori",
+      "role": "Research Assistant",
+      "img": "images/figs/MichelleLabPhoto.jpg",
+      "bio": "Michelle trained in Biology and Psychology at UCSD. She enjoys cell culture, mouse work and fixing broken mass spectrometers."
+    },
+    {
+      "name": "Gautam Machiraju",
+      "role": "Graduate Student",
+      "img": "images/figs/2016_Machiraju_Gautam.jpg",
+      "bio": "Gautam received his B.A. in Applied Mathematics from University of California, Berkeley. He is interested in both building bioinformatics tools based on scientific need, as well as tackling problems through the study of relevant biological systems, the iterative design of mathematical models to describe those systems, and the software implementation of said models into analytical applications."
+    },
+    {
+      "name": "Seema Sharma",
+      "role": "Honorary Labbie",
+      "img": "images/figs/2012_Sharma_Seema.png",
+      "bio": "Seema received her PhD in Chemistry from Rutgers University. She then completed a postdoctoral fellowship in analytical chemistry with Richard D. Smith at Pacific Northwest National Laboratory."
+    },
+    {
+      "name": "Joanna Sylman",
+      "role": "BDSTEP Post-Doctoral Fellow",
+      "img": "images/2017_Sylman_Joanna_web.jpg",
+      "bio": "Joanna received her PhD in Chemical and Biological Engineering from the Colorado School of Mines. She is interested in Big Data, Platelet Biology and Kiehl's products."
+    }
+  ],
+  "alumni": [
+    {
+      "name": "Mohamad Abbani",
+      "position": "Assistant Professor, El Camino College",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-abbani_mohamad.jpg"
+    },
+    {
+      "name": "Dario Amodei",
+      "position": "Vice President of Research at OpenAI",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-amodei.jpg"
+    },
+    {
+      "name": "Chris Behrens",
+      "position": "Associate Director, Conjugation Development",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-behrens_christopher.jpg"
+    },
+    {
+      "name": "Rob Burke",
+      "position": "Director of Software Engineering at Deep6 Analytics",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-burke_rob.jpg"
+    },
+    {
+      "name": "Fiona Chandra",
+      "position": "Senior Scientist at Amgen",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-chandra_fiona.jpg"
+    },
+    {
+      "name": "Jarrett Egertson",
+      "position": "Postdoctoral Fellow at University of Washington",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-egertson_jarrett.png"
+    },
+    {
+      "name": "Colin Flinders",
+      "position": "Postdoctoral Fellow at USC",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-flinders_colin.jpg"
+    },
+    {
+      "name": "Rob Grothe",
+      "position": "Systems Engineer at Pacific Biosciences",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-grothe_rob.jpg"
+    },
+    {
+      "name": "Kate Hoff",
+      "position": "Mathematics Instructor at Northfield Mount Hermon",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-hoff_kate.jpg"
+    },
+    {
+      "name": "Mike Janis",
+      "position": "Strategy &amp; Corporate Development at Agilent Technologies",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-janis_mike.jpg"
+    },
+    {
+      "name": "Kian Kani",
+      "position": "Assistant Professor, USC",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-kani_kian.png"
+    },
+    {
+      "name": "Kermit The Frog",
+      "position": "Celebrity",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-kermitthefrog.gif"
+    },
+    {
+      "name": "Darren Kessner",
+      "position": "Math and Computer Science Teacher at Marlborough School",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-kessner_darren.jpg"
+    },
+    {
+      "name": "Roland Luethy",
+      "position": "Assistant Director, Bioinformatics at Agensys",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-luethy_roland.jpg"
+    },
+    {
+      "name": "Emily Moin",
+      "position": "Product Operations and Escalations Manager at Google",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-moin_emily.jpg"
+    },
+    {
+      "name": "Shannon Mumenthaler",
+      "position": "Assistant Professor, USC",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-mumenthaler_shannon.jpg"
+    },
+    {
+      "name": "Peeps",
+      "position": "Oddly resilient and hard-working marshmallow creatures",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-peeps_compressed.jpg"
+    },
+    {
+      "name": "Maryann Vogelsang",
+      "position": "Director of Clinical Proteomics and Bioinformatics at Nuclea Biotechnologies",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-vogelsang_maryann.jpg"
+    },
+    {
+      "name": "Damien Wood",
+      "position": "Principal Statistician at Takeda",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-wood_damien.jpg"
+    },
+    {
+      "name": "Godwin Yung",
+      "position": "",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-yung_godwin.jpg"
+    },
+    {
+      "name": "Justin Carden",
+      "position": "",
+      "img": "media/djmediatools/cache/7-alumni/175x220-crop-90-jcarden.png"
+    }
+  ],
+  "interns": []
+}

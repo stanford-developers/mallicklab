@@ -639,8 +639,9 @@ function renderEditor(pub) {
           <input id="f_biorxiv_doi" value="${escapeHtml(pub.biorxiv_doi||'')}" placeholder="10.1101/xxxxxxx">
         </div>
         <div class="form-group">
-          <label>Local PDF path <span style="font-weight:400;text-transform:none">(relative to site root)</span></label>
-          <input id="f_pdf" value="${escapeHtml(pub.pdf||'')}" placeholder="pdfs/lastname-year-keyword.pdf">
+          <label>PDF path override <span style="font-weight:400;text-transform:none">(optional)</span></label>
+          <input id="f_pdf" value="${escapeHtml(pub.pdf||'')}" placeholder="pdfs/custom-name.pdf">
+          <div class="help-text">PDFs are auto-detected: name your file <strong>${escapeHtml(pub.id||'[id]')}.pdf</strong> and add it to <code>pdfs/index.json</code>. Only set this field if using a non-standard filename.</div>
         </div>
       </div>
       <div class="form-row full">
@@ -791,7 +792,7 @@ function buildManualForm(p) {
     </div>
     <div class="form-row">
       <div class="form-group"><label>bioRxiv DOI</label><input id="m_biorxiv_doi" value="${escapeHtml(p.biorxiv_doi||'')}" placeholder="10.1101/xxxxxxx"></div>
-      <div class="form-group"><label>Local PDF path</label><input id="m_pdf" value="${escapeHtml(p.pdf||'')}" placeholder="pdfs/lastname-year.pdf"></div>
+      <div class="form-group"><label>PDF path override</label><input id="m_pdf" value="${escapeHtml(p.pdf||'')}" placeholder="pdfs/custom-name.pdf"><div class="help-text">Leave blank if naming the PDF <strong>[id].pdf</strong> in <code>pdfs/index.json</code>.</div></div>
     </div>
     <hr class="section-divider">
     <div class="form-group">
