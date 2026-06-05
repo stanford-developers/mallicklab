@@ -60,21 +60,6 @@
     "highlight": null
   },
   {
-    "id": "gourmet-2025-instability",
-    "pmid": null,
-    "title": "Distinct Molecular Profiles Associated with Early vs Late Genome Instability in Cancer",
-    "authors": "Gourmet, Lucie, Lam, James, Pennycuick, Adam, Zapata, Luis, Mallick, Parag, Walker-Samuel, Simon",
-    "journal": "Scientific Reports",
-    "year": 2025,
-    "volume": null,
-    "pages": null,
-    "doi": null,
-    "pdf": "pdfs/2025-Gourmet-distinct_molecular_profiles_associated_early_vs.pdf",
-    "status": "in_press",
-    "biorxiv_doi": null,
-    "highlight": null
-  },
-  {
     "id": "reffai-2025-cohort",
     "pmid": "40565234",
     "title": "Integrated Plasma and Tumor Proteomics of Nasopharyngeal Carcinoma in a Moroccan Cohort",
@@ -165,6 +150,21 @@
     "highlight": null
   },
   {
+    "id": "gourmet-2024-hallmarks",
+    "pmid": null,
+    "title": "The Temporal Evolution of Cancer Hallmarks",
+    "authors": "Gourmet, Lucie, Ramazzoti, Daniele, Mallick, Parag, Walker-Samuel, Simon, Zapata, Luis",
+    "journal": "bioRxiv",
+    "year": 2024,
+    "volume": null,
+    "pages": null,
+    "doi": "10.1101/2024.01.21.576566",
+    "pdf": null,
+    "status": "preprint",
+    "biorxiv_doi": "10.1101/2024.01.21.576566",
+    "highlight": null
+  },
+  {
     "id": "barker-2023-next",
     "pmid": "37196763",
     "title": "An Inflection Point in Cancer Protein Biomarkers: What was and What's Next",
@@ -240,6 +240,21 @@
     "highlight": null
   },
   {
+    "id": "aksel-2022-protein-arrays",
+    "pmid": "35822871",
+    "title": "High-density and scalable protein arrays for single-molecule proteomic studies",
+    "authors": "Aksel, Tural, Qian, Hongji, Hao, Pengyu, Indermuhle, Pierre F, Inman, Christina, Paul, Shubhodeep, Chen, Kevin, Seghers, Ryan, Robinson, Julia K, De Garate, Mercedes, Nortman, Brittany, Tan, Jiongyi, Hendricks, Steven, Sankar, Subra, Mallick, Parag",
+    "journal": "bioRxiv",
+    "year": 2022,
+    "volume": null,
+    "pages": null,
+    "doi": "10.1101/2022.05.02.490328",
+    "pdf": null,
+    "status": "preprint",
+    "biorxiv_doi": "10.1101/2022.05.02.490328",
+    "highlight": null
+  },
+  {
     "id": "gardner-2022-cancerome",
     "pmid": "35739399",
     "title": "Nano-omics: nanotechnology-based multidimensional harvesting of the blood-circulating cancerome",
@@ -252,6 +267,36 @@
     "pdf": "pdfs/2022-Gardner-nanoomics_nanotechnologybased_multidimensional_harvesting_bl.pdf",
     "status": "published",
     "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "mallick-2022-vanish",
+    "pmid": null,
+    "title": "Your brain is deceiving you: a magician-scientist's perspective on how to do better science",
+    "authors": "Mallick, Parag",
+    "journal": "Vanish Magazine",
+    "year": 2022,
+    "volume": null,
+    "pages": "18-28",
+    "doi": null,
+    "pdf": "pdfs/2022-Mallick-brain_deceiving_you_magician_scientist.pdf",
+    "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "egertson-2021-prism",
+    "pmid": "34900353",
+    "title": "A theoretical framework for proteome-scale single-molecule protein identification using multi-affinity protein binding reagents",
+    "authors": "Egertson, Jarrett D, DiPasquo, Dan, Killeen, Alana, Lobanov, Vadim, Patel, Sujal, Mallick, Parag",
+    "journal": "bioRxiv",
+    "year": 2021,
+    "volume": null,
+    "pages": null,
+    "doi": "10.1101/2021.10.11.463967",
+    "pdf": null,
+    "status": "preprint",
+    "biorxiv_doi": "10.1101/2021.10.11.463967",
     "highlight": null
   },
   {
@@ -280,6 +325,21 @@
     "pages": "19921",
     "doi": "10.1038/s41598-021-99084-4",
     "pdf": "pdfs/2021-Stawicki-modular_fluorescent_nanoparticle_dna_probes_detection.pdf",
+    "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "zavaleta-2021-gambhir",
+    "pmid": "32920020",
+    "title": "Sanjiv 'Sam' Gambhir (1962–2020)",
+    "authors": "Zavaleta, Cristina, Mallick, Parag",
+    "journal": "Nature Nanotechnology",
+    "year": 2021,
+    "volume": "16",
+    "pages": "2-3",
+    "doi": "10.1038/s41565-020-00800-2",
+    "pdf": "pdfs/2021-Zavaleta-sanjiv_sam_gambhir_1962_2020.pdf",
     "status": "published",
     "biorxiv_doi": null,
     "highlight": null
@@ -435,21 +495,6 @@
     "highlight": null
   },
   {
-    "id": "sylman-2018-patients",
-    "pmid": "29700384",
-    "title": "A Temporal Examination of Platelet Counts as a Predictor of Prognosis in Lung, Prostate, and Colon Cancer Patients",
-    "authors": "Sylman, Joanna L, Boyce, Hunter B, Mitrugno, Annachiara, Tormoen, Garth W, Thomas, I-Chun, Wagner, Todd H, Lee, Jennifer S, Leppert, John T, McCarty, Owen J T, Mallick, Parag",
-    "journal": "Scientific reports",
-    "year": 2018,
-    "volume": "8(1)",
-    "pages": "6564",
-    "doi": "10.1038/s41598-018-25019-1",
-    "pdf": "pdfs/2018-Sylman-temporal_examination_platelet_counts_as_predictor.pdf",
-    "status": "published",
-    "biorxiv_doi": null,
-    "highlight": null
-  },
-  {
     "id": "hughes-2018-therapy",
     "pmid": "29689709",
     "title": "A blood biomarker for monitoring response to anti-EGFR therapy",
@@ -460,6 +505,21 @@
     "pages": "333-344",
     "doi": "10.3233/CBM-171149",
     "pdf": "pdfs/2018-Hughes-blood_biomarker_monitoring_response_antiegfr_therapy.pdf",
+    "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "sylman-2018-patients",
+    "pmid": "29700384",
+    "title": "A Temporal Examination of Platelet Counts as a Predictor of Prognosis in Lung, Prostate, and Colon Cancer Patients",
+    "authors": "Sylman, Joanna L, Boyce, Hunter B, Mitrugno, Annachiara, Tormoen, Garth W, Thomas, I-Chun, Wagner, Todd H, Lee, Jennifer S, Leppert, John T, McCarty, Owen J T, Mallick, Parag",
+    "journal": "Scientific reports",
+    "year": 2018,
+    "volume": "8(1)",
+    "pages": "6564",
+    "doi": "10.1038/s41598-018-25019-1",
+    "pdf": "pdfs/2018-Sylman-temporal_examination_platelet_counts_as_predictor.pdf",
     "status": "published",
     "biorxiv_doi": null,
     "highlight": null
@@ -595,6 +655,21 @@
     "pages": "134-156",
     "doi": "10.1007/978-3-319-56970-3_9",
     "pdf": "pdfs/2017-Ness-bayesian_active_learning_experimental_design_inferring.pdf",
+    "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "adusumilli-2017-mspicture",
+    "pmid": null,
+    "title": "A practical guide to using proteowizard msConvert and msPicture",
+    "authors": "Adusumilli, Ravali, Mallick, Parag",
+    "journal": "Methods in Molecular Biology",
+    "year": 2017,
+    "volume": "1550",
+    "pages": "339-369",
+    "doi": "10.1007/978-1-4939-6747-6",
+    "pdf": null,
     "status": "published",
     "biorxiv_doi": null,
     "highlight": null
@@ -780,6 +855,21 @@
     "highlight": null
   },
   {
+    "id": "carden-2016-reaction-networks",
+    "pmid": null,
+    "title": "Mathematical Methods to Describe the Behavior of Chemical Reaction Networks",
+    "authors": "Carden, J, Pantea, C, Craciun, G, Machiraju, R, Mallick, P",
+    "journal": "Handbook of Mathematical Methods in Cancer Biology",
+    "year": 2016,
+    "volume": null,
+    "pages": null,
+    "doi": "10.1101/070326",
+    "pdf": null,
+    "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
     "id": "bemis-2016-segments",
     "pmid": "26796117",
     "title": "Probabilistic Segmentation of Mass Spectrometry (MS) Images Helps Select Important Ions and Characterize Confidence in the Resulting Segments",
@@ -955,6 +1045,21 @@
     "pages": "2607-17",
     "doi": "10.1158/1535-7163.MCT-14-0363",
     "pdf": "pdfs/2014-Li-antimet_immunopet_nonsmall_cell_lung_cancer.pdf",
+    "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "mallick-2014-aphelion-asia",
+    "pmid": null,
+    "title": "Cancer as a Multi-scale Complex Adaptive System (Asia)",
+    "authors": "Mallick, Parag",
+    "journal": "Assessment of Physical Sciences and Engineering Advances in Life Sciences and Oncology (Aphelion) in Asia",
+    "year": 2014,
+    "volume": null,
+    "pages": null,
+    "doi": null,
+    "pdf": null,
     "status": "published",
     "biorxiv_doi": null,
     "highlight": null
@@ -1180,6 +1285,21 @@
     "pages": "13.5.1-13.5.25",
     "doi": "10.1002/0471250953.bi1305s36",
     "pdf": "pdfs/2011-Eckels-installation_use_labkey_server_proteomics.pdf",
+    "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "knoblock-2011-linkedscience",
+    "pmid": null,
+    "title": "Interactively Mapping Data Sources into the Semantic Web",
+    "authors": "Knoblock, CA, Szekely, P, Ambite, JL, Gupta, S, Goel, A, Muslea, M, Lerman, K, Mallick, P",
+    "journal": "Proceedings of the Workshop on Linked Science",
+    "year": 2011,
+    "volume": null,
+    "pages": null,
+    "doi": null,
+    "pdf": "pdfs/2011-Knoblock-interactively_mapping_data_sources_semantic_web.pdf",
     "status": "published",
     "biorxiv_doi": null,
     "highlight": null
@@ -1530,21 +1650,6 @@
     "highlight": null
   },
   {
-    "id": "kleiger-2002-extremophiles",
-    "pmid": "11993993",
-    "title": "GXXXG and AXXXA: common alpha-helical interaction motifs in proteins, particularly in extremophiles",
-    "authors": "Kleiger, Gary, Grothe, Robert, Mallick, Parag, Eisenberg, David",
-    "journal": "Biochemistry",
-    "year": 2002,
-    "volume": "41(19)",
-    "pages": "5990-7",
-    "doi": "10.1021/bi0200763",
-    "pdf": "pdfs/2002-Kleiger-gxxxg_axxxa_common_alphahelical_interaction_motifs.pdf",
-    "status": "published",
-    "biorxiv_doi": null,
-    "highlight": null
-  },
-  {
     "id": "mallick-2002-bonds",
     "pmid": "12107280",
     "title": "Genomic evidence that the intracellular proteins of archaeal microbes contain disulfide bonds",
@@ -1555,6 +1660,21 @@
     "pages": "9679-84",
     "doi": "10.1073/pnas.142310499",
     "pdf": "pdfs/2002-Mallick-genomic_evidence_that_intracellular_proteins_archaeal.pdf",
+    "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "kleiger-2002-extremophiles",
+    "pmid": "11993993",
+    "title": "GXXXG and AXXXA: common alpha-helical interaction motifs in proteins, particularly in extremophiles",
+    "authors": "Kleiger, Gary, Grothe, Robert, Mallick, Parag, Eisenberg, David",
+    "journal": "Biochemistry",
+    "year": 2002,
+    "volume": "41(19)",
+    "pages": "5990-7",
+    "doi": "10.1021/bi0200763",
+    "pdf": "pdfs/2002-Kleiger-gxxxg_axxxa_common_alphahelical_interaction_motifs.pdf",
     "status": "published",
     "biorxiv_doi": null,
     "highlight": null
@@ -1616,6 +1736,51 @@
     "doi": "10.1006/jmbi.2000.3781",
     "pdf": "pdfs/2000-Kleiger-17_crystal_structure_bpi_study_how.pdf",
     "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "mallick-2000-accidental",
+    "pmid": null,
+    "title": "The accidental bioinformaticist",
+    "authors": "Mallick, Parag",
+    "journal": "Journal of Cellular Biochemistry",
+    "year": 2000,
+    "volume": "80",
+    "pages": "208-209",
+    "doi": null,
+    "pdf": "pdfs/2000-Mallick-accidental_bioinformaticist.pdf",
+    "status": "published",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "hori-inpress-digest",
+    "pmid": null,
+    "title": "A straightforward, robust protocol for in-solution digest for bottom-up proteomics",
+    "authors": "Hori, Michelle, Mallick, Parag",
+    "journal": "Methods in Molecular Biology",
+    "year": null,
+    "volume": null,
+    "pages": null,
+    "doi": null,
+    "pdf": null,
+    "status": "in_press",
+    "biorxiv_doi": null,
+    "highlight": null
+  },
+  {
+    "id": "adusumilli-inpress-containerized",
+    "pmid": null,
+    "title": "Using containerized ProteoWizard for data conversion",
+    "authors": "Adusumilli, Ravali, Mallick, Parag",
+    "journal": "Methods in Molecular Biology",
+    "year": null,
+    "volume": null,
+    "pages": null,
+    "doi": null,
+    "pdf": null,
+    "status": "in_press",
     "biorxiv_doi": null,
     "highlight": null
   }
