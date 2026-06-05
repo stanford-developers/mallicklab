@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!-- load core head -->
-	<base  />
+	<base href="/mallicklab/mallicklab.stanford.edu/" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="Systems Biology, Proteomics, Cancer Biology, Bioinformatics, Biomarkers, Multi-scale Modeling, Complexity, Proteome Informatics, ProteoWizard, ProteoTypic Peptides, Canary Center, Early Cancer Detection, Parag Mallick" />
 	<meta name="robots" content="index, follow" />
@@ -61,7 +61,8 @@
 	<script type="text/javascript">
 jQuery(window).on('load',  function() {
 				new JCaption('img.caption');
-			});jQuery(function($) {
+			});
+jQuery(function($) {
 			SqueezeBox.initialize({});
 			SqueezeBox.assign($('a.modal').get(), {
 				parse: 'rel'
@@ -98,7 +99,8 @@ jQuery(window).on('load',  function() {
 				}
 			}
 		};
-		jQuery(function($) {
+		
+jQuery(function($) {
 			 $('.hasTip').each(function() {
 				var title = $(this).attr('title');
 				if (title) {
@@ -109,7 +111,10 @@ jQuery(window).on('load',  function() {
 				}
 			});
 			var JTooltips = new Tips($('.hasTip').get(), {"maxTitleChars": 50,"fixed": false});
-		});window.addEvent('domready',function(){ if(!this.DJSlideshow5m98) this.DJSlideshow5m98 = new DJImageTabber('dj-tabber5m98',{autoplay: 1,pause_autoplay: 1,transition: Fx.Transitions.Expo.easeInOut,duration: 3000,delay: 9000,slider_type: 'fade',desc_effect: 'fade',width: 700,height: 350,spacing: 1,navi_margin: 51,preload: 0,tab_height: 80,tab_indicator: 2}) });window.addEvent('domready',function(){document.id('dj-main90').addClass('allowHide')});window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('dj-main90'), {wrapper: document.id('jm-djmenu'), transition: 'cubic:out', duration: 200, delay: 1200,
+		});
+window.addEvent('domready',function(){ if(!this.DJSlideshow5m98) this.DJSlideshow5m98 = new DJImageTabber('dj-tabber5m98',{autoplay: 1,pause_autoplay: 1,transition: Fx.Transitions.Expo.easeInOut,duration: 3000,delay: 9000,slider_type: 'fade',desc_effect: 'fade',width: 700,height: 350,spacing: 1,navi_margin: 51,preload: 0,tab_height: 80,tab_indicator: 2}) });
+window.addEvent('domready',function(){document.id('dj-main90').addClass('allowHide')});
+window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('dj-main90'), {wrapper: document.id('jm-djmenu'), transition: 'cubic:out', duration: 200, delay: 1200,
 		height_fx: true, width_fx: true, opacity_fx: true,
 		height_fx_sub: true, width_fx_sub: true, opacity_fx_sub: true }); });
 	</script>
