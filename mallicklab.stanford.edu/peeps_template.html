@@ -269,236 +269,96 @@ hr.peeps-rule { border: none; border-top: 1px solid #ddd; margin: 8px 0 20px; }
 </style>
 
 <div id="peeps-root">
+  <p class="peeps-empty" id="peeps-loading">Loading…</p>
+</div>
 
+<script>
+fetch('people.json')
+  .then(r => { if (!r.ok) throw new Error('Could not load people.json'); return r.json(); })
+  .then(data => renderPeeps(data))
+  .catch(err => {
+    document.getElementById('peeps-loading').textContent = 'Error: ' + err.message;
+  });
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderPeeps(data) {
+  const root = document.getElementById('peeps-root');
+  let html = '';
+
+  // ── PI ──────────────────────────────────────────────────────────
+  const pi = data.pi;
+  html += `
     <h2 class="peeps-section-title">Me</h2>
     <hr class="peeps-rule">
     <div class="pi-section">
-      <img class="pi-img" src="images/figs/parag_la_bridge.jpg" alt="Parag Mallick" width="250">
+      <img class="pi-img" src="${esc(pi.img)}" alt="${esc(pi.name)}" width="250">
       <div class="pi-bio">
-        <p><strong>Parag Mallick</strong></p>
-        <p>Parag received his BS in Computer Science and Biochemistry at Washington University in St. Louis. He then completed his doctoral studies with David Eisenberg at UCLA. After his PhD, he trained with Ruedi Aebersold in clinical proteomics and systems biology at the Institute for Systems Biology. [<a href="indexa699.html?option=com_content&amp;view=article&amp;id=97">Bio and Headshot</a>]</p>
+        <p><strong>${esc(pi.name)}</strong></p>
+        <p>${esc(pi.bio)}${pi.bioLink ? ` [<a href="${esc(pi.bioLink)}">Bio and Headshot</a>]` : ''}</p>
       </div>
-    </div>
+    </div>`;
 
-  <h2 class="peeps-section-title">Current Stanford Peeps</h2>
-  <hr class="peeps-rule">
-  <table class="members-table"><tbody>
+  // ── Current members ─────────────────────────────────────────────
+  html += `<h2 class="peeps-section-title">Current Stanford Peeps</h2><hr class="peeps-rule">`;
+  if (data.current && data.current.length) {
+    html += `<table class="members-table"><tbody>`;
+    for (const m of data.current) {
+      html += `
         <tr>
-          <td><img class="member-img" src="images/figs/2014_adusumilli_ravali.jpg" alt="Ravali Adusumilli" width="150"></td>
+          <td><img class="member-img" src="${esc(m.img)}" alt="${esc(m.name)}" width="150"></td>
           <td>
-            <p><span class="member-name">Ravali Adusumilli</span>, <span class="member-role">Bioinformaticist</span></p>
-            <p>Ravali received her masters in Bioinformatics at Northeastern University and then worked for several years at Dana Farber Cancer Center as a Bioinformatics Analyst. She is interested in developing tools and pipelines for multi-omic analysis.</p>
+            <p><span class="member-name">${esc(m.name)}</span>${m.role ? `, <span class="member-role">${esc(m.role)}</span>` : ''}</p>
+            ${m.bio ? `<p>${esc(m.bio)}</p>` : ''}
           </td>
-        </tr>
-        <tr>
-          <td><img class="member-img" src="images/figs/2016_Anderson_Jamie_web.jpg" alt="Jamie Anderson" width="150"></td>
-          <td>
-            <p><span class="member-name">Jamie Anderson</span>, <span class="member-role">Administrative Associate</span></p>
-            <p>When not assisting the Mallick Lab, Jamie is not an American professional snowboarder. She did not win the gold medal in the inaugural Women&#x27;s Slopestyle Event at the 2014 Winter Olympics in Sochi, Russia or repeat the feat at the 2018 Winter Olympics in Pyeongchang, South Korea. However, do talk to her about her tales of daring on K2 or her fondness for rescuing puppies.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="member-img" src="images/figs/2015_Atallah_Michelle_web.jpg" alt="Michelle Atallah" width="150"></td>
-          <td>
-            <p><span class="member-name">Michelle Atallah</span>, <span class="member-role">Cancer Bio Graduate Student</span></p>
-            <p>Michelle received her BS in Biology from Yale University. After graduation she spent two years working in clinical research at Nodality, developing diagnostics for autoimmune diseases and cancer. She is interested in tumor immunology and its applications in cancer immunotherapy and early cancer detection.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="member-img" src="images/figs/2016_Hunter_Boyce.jpg" alt="Hunter Boyce" width="150"></td>
-          <td>
-            <p><span class="member-name">Hunter Boyce</span>, <span class="member-role">Biomedical Informatics Graduate Student</span></p>
-            <p>Hunter received his BS in Bioinformatics from University of California, San Diego. He is interested in the application of statistical modeling and machine learning to integrate multi-omic data in order to understand proteome dynamics. He is also broadly interested in human-computer interaction and reproducibility in science.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="member-img" src="images/figs/MichelleLabPhoto.jpg" alt="Michelle Hori" width="150"></td>
-          <td>
-            <p><span class="member-name">Michelle Hori</span>, <span class="member-role">Research Assistant</span></p>
-            <p>Michelle trained in Biology and Psychology at UCSD. She enjoys cell culture, mouse work and fixing broken mass spectrometers.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="member-img" src="images/figs/2016_Machiraju_Gautam.jpg" alt="Gautam Machiraju" width="150"></td>
-          <td>
-            <p><span class="member-name">Gautam Machiraju</span>, <span class="member-role">Graduate Student</span></p>
-            <p>Gautam received his B.A. in Applied Mathematics from University of California, Berkeley. He is interested in both building bioinformatics tools based on scientific need, as well as tackling problems through the study of relevant biological systems, the iterative design of mathematical models to describe those systems, and the software implementation of said models into analytical applications.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="member-img" src="images/figs/2012_Sharma_Seema.png" alt="Seema Sharma" width="150"></td>
-          <td>
-            <p><span class="member-name">Seema Sharma</span>, <span class="member-role">Honorary Labbie</span></p>
-            <p>Seema received her PhD in Chemistry from Rutgers University. She then completed a postdoctoral fellowship in analytical chemistry with Richard D. Smith at Pacific Northwest National Laboratory.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><img class="member-img" src="images/2017_Sylman_Joanna_web.jpg" alt="Joanna Sylman" width="150"></td>
-          <td>
-            <p><span class="member-name">Joanna Sylman</span>, <span class="member-role">BDSTEP Post-Doctoral Fellow</span></p>
-            <p>Joanna received her PhD in Chemical and Biological Engineering from the Colorado School of Mines. She is interested in Big Data, Platelet Biology and Kiehl&#x27;s products.</p>
-          </td>
-        </tr>
-</tbody></table>
+        </tr>`;
+    }
+    html += `</tbody></table>`;
+  } else {
+    html += `<p class="peeps-empty">No current members listed.</p>`;
+  }
 
-  <hr class="peeps-rule">
-  <h2 class="peeps-section-title">Alumn Types and CAMM Folks</h2>
-  <hr class="peeps-rule">
-  <div class="alumni-grid">
+  // ── Alumni ───────────────────────────────────────────────────────
+  html += `<hr class="peeps-rule"><h2 class="peeps-section-title">Alumn Types and CAMM Folks</h2><hr class="peeps-rule">`;
+  if (data.alumni && data.alumni.length) {
+    html += `<div class="alumni-grid">`;
+    for (const a of data.alumni) {
+      html += `
         <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-abbani_mohamad.jpg" alt="Mohamad Abbani" width="175" height="220">
+          <img src="${esc(a.img)}" alt="${esc(a.name)}" width="175" height="220">
           <div class="alumni-desc">
-            <div class="alumni-name">Mohamad Abbani</div>
-            <div class="alumni-pos">Assistant Professor, El Camino College</div>
+            <div class="alumni-name">${esc(a.name)}</div>
+            ${a.position ? `<div class="alumni-pos">${a.position}</div>` : ''}
           </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-amodei.jpg" alt="Dario Amodei" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Dario Amodei</div>
-            <div class="alumni-pos">Vice President of Research at OpenAI</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-behrens_christopher.jpg" alt="Chris Behrens" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Chris Behrens</div>
-            <div class="alumni-pos">Associate Director, Conjugation Development</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-burke_rob.jpg" alt="Rob Burke" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Rob Burke</div>
-            <div class="alumni-pos">Director of Software Engineering at Deep6 Analytics</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-chandra_fiona.jpg" alt="Fiona Chandra" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Fiona Chandra</div>
-            <div class="alumni-pos">Senior Scientist at Amgen</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-egertson_jarrett.png" alt="Jarrett Egertson" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Jarrett Egertson</div>
-            <div class="alumni-pos">Postdoctoral Fellow at University of Washington</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-flinders_colin.jpg" alt="Colin Flinders" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Colin Flinders</div>
-            <div class="alumni-pos">Postdoctoral Fellow at USC</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-grothe_rob.jpg" alt="Rob Grothe" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Rob Grothe</div>
-            <div class="alumni-pos">Systems Engineer at Pacific Biosciences</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-hoff_kate.jpg" alt="Kate Hoff" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Kate Hoff</div>
-            <div class="alumni-pos">Mathematics Instructor at Northfield Mount Hermon</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-janis_mike.jpg" alt="Mike Janis" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Mike Janis</div>
-            <div class="alumni-pos">Strategy &amp;amp; Corporate Development at Agilent Technologies</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-kani_kian.png" alt="Kian Kani" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Kian Kani</div>
-            <div class="alumni-pos">Assistant Professor, USC</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-kermitthefrog.gif" alt="Kermit The Frog" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Kermit The Frog</div>
-            <div class="alumni-pos">Celebrity</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-kessner_darren.jpg" alt="Darren Kessner" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Darren Kessner</div>
-            <div class="alumni-pos">Math and Computer Science Teacher at Marlborough School</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-luethy_roland.jpg" alt="Roland Luethy" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Roland Luethy</div>
-            <div class="alumni-pos">Assistant Director, Bioinformatics at Agensys</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-moin_emily.jpg" alt="Emily Moin" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Emily Moin</div>
-            <div class="alumni-pos">Product Operations and Escalations Manager at Google</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-mumenthaler_shannon.jpg" alt="Shannon Mumenthaler" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Shannon Mumenthaler</div>
-            <div class="alumni-pos">Assistant Professor, USC</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-peeps_compressed.jpg" alt="Peeps" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Peeps</div>
-            <div class="alumni-pos">Oddly resilient and hard-working marshmallow creatures</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-vogelsang_maryann.jpg" alt="Maryann Vogelsang" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Maryann Vogelsang</div>
-            <div class="alumni-pos">Director of Clinical Proteomics and Bioinformatics at Nuclea Biotechnologies</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-wood_damien.jpg" alt="Damien Wood" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Damien Wood</div>
-            <div class="alumni-pos">Principal Statistician at Takeda</div>
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-yung_godwin.jpg" alt="Godwin Yung" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Godwin Yung</div>
-            
-          </div>
-        </div>
-        <div class="alumni-card">
-          <img src="media/djmediatools/cache/7-alumni/175x220-crop-90-jcarden.png" alt="Justin Carden" width="175" height="220">
-          <div class="alumni-desc">
-            <div class="alumni-name">Justin Carden</div>
-            
-          </div>
-        </div>
-</div>
+        </div>`;
+    }
+    html += `</div>`;
+  } else {
+    html += `<p class="peeps-empty">No alumni listed yet.</p>`;
+  }
 
-  <hr class="peeps-rule">
-  <h2 class="peeps-section-title">Past Interns</h2>
-  <hr class="peeps-rule">
-  <p class="peeps-empty">No interns listed yet — add entries to the <code>interns</code> array in people.json.</p>
-</div>
+  // ── Interns ──────────────────────────────────────────────────────
+  html += `<hr class="peeps-rule"><h2 class="peeps-section-title">Past Interns</h2><hr class="peeps-rule">`;
+  if (data.interns && data.interns.length) {
+    html += `<div class="interns-list">`;
+    for (const i of data.interns) {
+      html += `
+        <div class="intern-item">
+          <span class="intern-name">${esc(i.name)}</span>
+          ${i.detail ? `<span class="intern-detail"> — ${esc(i.detail)}</span>` : ''}
+        </div>`;
+    }
+    html += `</div>`;
+  } else {
+    html += `<p class="peeps-empty">No interns listed yet — add entries to the <code>interns</code> array in people.json.</p>`;
+  }
+
+  root.innerHTML = html;
+}
+</script>
 </section>			
 			<footer id="jm-footer" class="nofootermod">
 	<div class="container-fluid">
