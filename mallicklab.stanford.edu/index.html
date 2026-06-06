@@ -114,7 +114,91 @@ window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('
 		
 	
 	
-	</head>	<body>
+	
+<style>
+/* ── Responsive fixes ──────────────────────────────────────────────── */
+
+/* Slider: override hardcoded 956px width and 350px height */
+#dj-tabber5m98,
+#dj-tabber5m98 .dj-tabber-in {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+#dj-tabber5m98 .dj-tabber-in {
+  height: auto !important;
+  aspect-ratio: 700 / 350;      /* maintain 2:1 banner ratio */
+  min-height: 120px;
+}
+#dj-tabber5m98 .dj-slide img.dj-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Thumbnail nav strip */
+#dj-tabber5m98 .dj-navigation {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  /* Page chrome */
+  .container-fluid { padding-left: 10px !important; padding-right: 10px !important; }
+  #jm-bar-in, #jm-header, #jm-breadcrumbs-fontswitcher,
+  #jm-top1, #jm-top2, #jm-main, #jm-bottom, #jm-footer {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  /* Slider thumbnail strip: scroll horizontally rather than overflow */
+  #dj-tabber5m98 .dj-navigation {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+  #dj-tabber5m98 .dj-navigation li {
+    display: inline-block;
+  }
+
+  /* Slide caption text: scale down on small screens */
+  #dj-tabber5m98 .dj-slide-desc-text,
+  .dj-slide-title, .dj-slide-title a,
+  .dj-slide-description, .dj-slide-description p {
+    font-size: 0.75em !important;
+  }
+
+  /* Nav menu: handled by djmenu's own dj-select dropdown,
+     but ensure it doesn't overflow */
+  #jm-header { overflow: visible; }
+  .dj-main { overflow-x: hidden; }
+
+  /* Top logo area */
+  #jm-top1 { text-align: center; }
+  h1#jm-logo { font-size: 1.8em !important; }
+
+  /* Content area */
+  #jm-content, #jm-maincontent { width: 100% !important; }
+
+  /* Images in content */
+  .jm-article img, #jm-maincontent img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Canary logo */
+  #jm-maincontent img[src*="Canary"] {
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Very small phones: hide thumbnail strip entirely to save space */
+  #dj-tabber5m98 .dj-navigation { display: none !important; }
+  /* Let slider go full aspect ratio */
+  #dj-tabber5m98 .dj-tabber-in { aspect-ratio: 700 / 300; }
+}
+</style>
+</head>	<body>
 		<div id="jm-allpage">
 			
 <section id="jm-bar">
@@ -582,6 +666,7 @@ window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('
 								</div>
 	</div>
 </section>			
+			
 <footer id="jm-footer" >
 	<div class="container-fluid">
 					<div class="footer-mod count_3"><div class="row-fluid"><div class="footer-mod-in span3"><div class="footer-mod-bg">	<div class="jm-module blank-ms">
