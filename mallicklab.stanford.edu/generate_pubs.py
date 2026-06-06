@@ -14,6 +14,9 @@ Run this whenever publications.json changes.
 
 import json, re, argparse, html, os, sys
 from collections import defaultdict
+from datetime import date
+
+CURRENT_YEAR = date.today().year
 
 # ── CLI ───────────────────────────────────────────────────────────────────
 parser = argparse.ArgumentParser()
@@ -40,20 +43,36 @@ MAX_AUTHORS = 6
 def esc(s):
     return html.escape(str(s)) if s else ''
 
+def parse_authors(author_str):
+    """Parse 'Lastname, Firstname, Lastname, Firstname, ...' into ['Firstname Lastname', ...]"""
+    if not author_str:
+        return []
+    parts = [p.strip() for p in author_str.split(',') if p.strip()]
+    authors = []
+    i = 0
+    while i < len(parts):
+        if i + 1 < len(parts):
+            authors.append(f"{parts[i+1]} {parts[i]}")
+            i += 2
+        else:
+            authors.append(parts[i])
+            i += 1
+    return authors
+
 def build_authors(author_str):
     if not author_str:
         return ''
-    parts = [a.strip() for a in author_str.split(',') if a.strip()]
-    if len(parts) <= MAX_AUTHORS:
-        return f'<span class="pub-authors">{esc(", ".join(parts))}</span>'
-    short = ', '.join(parts[:MAX_AUTHORS]) + ' … '
-    full  = ', '.join(parts)
+    authors = parse_authors(author_str)
+    if len(authors) <= MAX_AUTHORS:
+        return f'<span class="pub-authors">{esc(", ".join(authors))}</span>'
+    short = ', '.join(authors[:MAX_AUTHORS]) + ' … '
+    full  = ', '.join(authors)
     uid   = f'au-{abs(hash(author_str)) % 1000000:06d}'
     return (
         f'<span class="pub-authors truncated" id="{uid}">'
         f'<span class="authors-short">{esc(short)}'
         f'<button class="toggle-authors" onclick="toggleAuthors(\'{uid}\')">'
-        f'+ {len(parts) - MAX_AUTHORS} more</button></span>'
+        f'+ {len(authors) - MAX_AUTHORS} more</button></span>'
         f'<span class="authors-full">{esc(full)} '
         f'<button class="toggle-authors" onclick="toggleAuthors(\'{uid}\')">'
         f'Show fewer</button></span>'
@@ -63,7 +82,8 @@ def build_authors(author_str):
 def build_details(p):
     parts = []
     if p.get('journal'): parts.append(f'<span class="pub-journal">{esc(p["journal"])}</span>')
-    if p.get('year'):    parts.append(str(p['year']))
+    year = p.get('year') or (CURRENT_YEAR if p.get('status') == 'in_press' else None)
+    if year:             parts.append(str(year))
     if p.get('volume'):  parts.append(esc(p['volume']))
     if p.get('pages'):   parts.append(esc(p['pages']))
     return '; '.join(parts)
@@ -144,8 +164,12 @@ else:
     featured_html = ''
 
 # ── Render by-year section ────────────────────────────────────────────────
-years = sorted({p['year'] for p in pubs if p.get('year')}, reverse=True)
-no_year = [p for p in pubs if not p.get('year')]
+# in_press entries with no year default to the current year for grouping
+def effective_year(p):
+    return p.get('year') or (CURRENT_YEAR if p.get('status') == 'in_press' else None)
+
+years = sorted({effective_year(p) for p in pubs if effective_year(p)}, reverse=True)
+no_year = [p for p in pubs if not effective_year(p)]
 
 year_blocks = [
     f'<div class="pubs-section-title">All Publications '
@@ -153,7 +177,7 @@ year_blocks = [
 ]
 
 for yr in years:
-    yr_pubs = [p for p in pubs if p.get('year') == yr]
+    yr_pubs = [p for p in pubs if effective_year(p) == yr]
     items = '\n'.join(pub_html(p) for p in yr_pubs)
     year_blocks.append(
         f'<div class="year-group" data-year="{yr}">\n'
