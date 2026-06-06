@@ -27,7 +27,7 @@
     "pdf": "pdfs/2026-Jung-multiscale_trimodal_histology_dataset_integrating_tumor.pdf",
     "status": "preprint",
     "biorxiv_doi": "10.64898/2026.05.15.725535",
-    "highlight": null
+    "highlight": "featured"
   },
   {
     "id": "keogh-2025-nucleosomes",
@@ -139,15 +139,15 @@
     "pmid": "38947933",
     "title": "Prospector Heads: Generalized Feature Attribution for Large Models & Data",
     "authors": "Machiraju, Gautam, Derry, Alexander, Desai, Arjun, Guha, Neel, Karimi, Amir-Hossein, Zou, James, Altman, Russ B, Ré, Christopher, Mallick, Parag",
-    "journal": "ArXiv",
+    "journal": "ICML'24: Proceedings of the 41st International Conference on Machine Learning",
     "year": 2024,
     "volume": null,
-    "pages": null,
-    "doi": null,
+    "pages": "34115 - 34144",
+    "doi": "10.5555/3692070.3693459",
     "pdf": "pdfs/2024-Machiraju-prospector_heads_generalized_feature_attribution_large.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "featured"
   },
   {
     "id": "gourmet-2024-hallmarks",
@@ -282,7 +282,7 @@
     "pdf": "pdfs/2022-Mallick-brain_deceiving_you_magician_scientist.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "featured"
   },
   {
     "id": "egertson-2021-prism",
@@ -372,7 +372,7 @@
     "pdf": "pdfs/2020-Atallah-immunoglobe_enabling_systems_immunology_manually_curated.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "highlighted"
   },
   {
     "id": "machiraju-2020-growth",
@@ -387,7 +387,7 @@
     "pdf": "pdfs/2020-Machiraju-multicompartment_modeling_protein_shedding_kinetics_during.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "highlighted"
   },
   {
     "id": "srivastava-2020-proteogenomics",
@@ -416,7 +416,7 @@
     "doi": null,
     "pdf": null,
     "status": "published",
-    "biorxiv_doi": null,
+    "biorxiv_doi": "highlighted",
     "highlight": null
   },
   {
@@ -477,7 +477,7 @@
     "pdf": "pdfs/2019-Srivastava-semantic_workflows_benchmark_challenges_enhancing_comparabil.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "highlighted"
   },
   {
     "id": "ness-2018-networks",
@@ -537,7 +537,7 @@
     "pdf": "pdfs/2018-Srivastava-building_transomics_evidence_using_imaging_omics.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "featured"
   },
   {
     "id": "sharpnack-2018-adenocarcinoma-2",
@@ -777,7 +777,7 @@
     "pdf": "pdfs/2017-Gil-towards_continuous_scientific_data_analysis_hypothesis.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "featured"
   },
   {
     "id": "garvey-2016-dynamics",
@@ -1032,7 +1032,7 @@
     "pdf": "pdfs/2015-Mumenthaler-impact_microenvironmental_heterogeneity_evolution_drug_resis.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "highlighted"
   },
   {
     "id": "li-2014-fragments",
@@ -1137,7 +1137,7 @@
     "pdf": "pdfs/2012-Chambers-crossplatform_toolkit_mass_spectrometry_proteomics.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "featured"
   },
   {
     "id": "mallick-2012-multiscale",
@@ -1347,7 +1347,7 @@
     "pdf": "pdfs/2010-Mallick-proteomics_pragmatic_perspective.pdf",
     "status": "published",
     "biorxiv_doi": null,
-    "highlight": null
+    "highlight": "highlighted"
   },
   {
     "id": "rodriguez-2009-principles",
