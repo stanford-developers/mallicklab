@@ -414,10 +414,10 @@
     "volume": null,
     "pages": null,
     "doi": null,
-    "pdf": null,
+    "pdf": "pdfs/2020-Boyce-using_information_influence_nutrient_diffusion_tumor.pdf",
     "status": "published",
-    "biorxiv_doi": "highlighted",
-    "highlight": null
+    "biorxiv_doi": null,
+    "highlight": "highlighted"
   },
   {
     "id": "boyce-2019-tumors",

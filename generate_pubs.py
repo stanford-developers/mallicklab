@@ -12,7 +12,7 @@ Usage:
 Run this whenever publications.json changes.
 """
 
-import json, re, argparse, html, os, sys
+import json, re, argparse, html, os, sys, hashlib
 from collections import defaultdict
 from datetime import date
 
@@ -67,7 +67,10 @@ def build_authors(author_str):
         return f'<span class="pub-authors">{esc(", ".join(authors))}</span>'
     short = ', '.join(authors[:MAX_AUTHORS]) + ' … '
     full  = ', '.join(authors)
-    uid   = f'au-{abs(hash(author_str)) % 1000000:06d}'
+    # NB: Python's built-in hash() is salted per-process, so it produced a
+    # different id on every run and made every regeneration a huge diff.
+    # md5 is stable across runs (used only as a short id, not for security).
+    uid   = f'au-{int(hashlib.md5(author_str.encode("utf-8")).hexdigest()[:8], 16) % 1000000:06d}'
     return (
         f'<span class="pub-authors truncated" id="{uid}">'
         f'<span class="authors-short">{esc(short)}'
@@ -139,12 +142,17 @@ def pub_html(p, is_featured_section=False):
     authors = build_authors(p.get('authors', ''))
     links_html = f'<div class="pub-links">{"".join(links)}</div>' if links else ''
 
+    # Built separately so the class attribute can use real double quotes.
+    # (Previously inlined with &quot; entities, which emitted a literal
+    # class="&quot;pub-details&quot;" and never matched the .pub-details CSS.)
+    details_html = f'<span class="pub-details">{details}</span>' if details else ''
+
     return (
         f'<li class="pub-entry {hl_class}" '
         f'data-id="{pid}" data-title="{t_low}" data-authors="{a_low}" data-journal="{j_low}">\n'
         f'  <span class="pub-title-text">{title_inner}{badges_html}</span>\n'
         f'  {authors}\n'
-        f'  {"<span class=&quot;pub-details&quot;>" + details + "</span>" if details else ""}\n'
+        f'  {details_html}\n'
         f'  {links_html}\n'
         f'</li>'
     )
