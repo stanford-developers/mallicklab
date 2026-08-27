@@ -11,10 +11,8 @@ import os, re, html, sys
 # alongside generate_pubs.py and generate_peeps.py.
 REPO = os.path.dirname(os.path.abspath(__file__))
 MD   = os.path.join(REPO, 'research_content.md')
-# Draft page. The live site still serves research.html; this build must never
-# touch it. Swap the filename here when the new page is ready to go live.
-PAGE = os.path.join(REPO, 'research_new.html')
-SEED = os.path.join(REPO, 'research.html')   # chrome donor if the draft is absent
+PAGE = os.path.join(REPO, 'research.html')
+SEED = PAGE
 
 # ---------------------------------------------------------------- parse md
 md = open(MD, encoding='utf-8').read()
@@ -272,7 +270,27 @@ SCRIPT = """
 			});
 			wrap.classList.remove('is-open');
 			area.classList.add('rp-ready');
+			area._rpShow = show;
 		});
+
+		/* Deep links. #ecology jumps to the section; #ecology-simple and
+		   #ecology-technical also open that summary. Both the initial load and
+		   later hash changes are handled. */
+		function openFromHash() {
+			var id = (location.hash || '').replace(/^#/, '');
+			if (!id) { return; }
+			var tab = document.getElementById(id);
+			if (!tab || !tab.classList.contains('rp-tab')) { return; }
+			var area = tab.closest('.rp-area');
+			if (!area || !area._rpShow) { return; }
+			if (tab.getAttribute('aria-selected') !== 'true') { area._rpShow(tab); }
+			area.scrollIntoView();
+		}
+		openFromHash();
+		/* Re-run once images have loaded: they can shift the layout after the
+		   first scroll, leaving the target section off-screen. */
+		window.addEventListener('load', openFromHash);
+		window.addEventListener('hashchange', openFromHash);
 	})();
 	</script>
 """
@@ -304,16 +322,16 @@ f'\t\t\t\t<p class="rp-q">{inline(s["question"])}</p>',
 f'\t\t\t\t<p class="rp-blurb">{inline(s["blurb"])}</p>',
 f'\t\t\t\t<div class="rp-tabs" role="tablist" aria-label="Readings of {esc(s["title"])}">',
  '\t\t\t\t\t<span class="rp-lead" aria-hidden="true">Learn more:</span>',
-f'\t\t\t\t\t<button type="button" class="rp-tab" role="tab" id="{sid}-t-lay"'
-f' aria-controls="{sid}-p-lay" aria-selected="false">Simple summary</button>',
-f'\t\t\t\t\t<button type="button" class="rp-tab" role="tab" id="{sid}-t-tech"'
-f' aria-controls="{sid}-p-tech" aria-selected="false">Technical summary</button>',
+f'\t\t\t\t\t<button type="button" class="rp-tab" role="tab" id="{sid}-simple"'
+f' aria-controls="{sid}-p-simple" aria-selected="false">Simple summary</button>',
+f'\t\t\t\t\t<button type="button" class="rp-tab" role="tab" id="{sid}-technical"'
+f' aria-controls="{sid}-p-technical" aria-selected="false">Technical summary</button>',
  '\t\t\t\t</div>',
  '\t\t\t\t<div class="rp-panelwrap">',
-f'\t\t\t\t\t<div class="rp-panel rp-lay" role="tabpanel" id="{sid}-p-lay" aria-labelledby="{sid}-t-lay">',
+f'\t\t\t\t\t<div class="rp-panel rp-lay" role="tabpanel" id="{sid}-p-simple" aria-labelledby="{sid}-simple">',
  '\t\t\t\t\t' + s['lay'],
  '\t\t\t\t\t</div>',
-f'\t\t\t\t\t<div class="rp-panel rp-tech" role="tabpanel" id="{sid}-p-tech" aria-labelledby="{sid}-t-tech">',
+f'\t\t\t\t\t<div class="rp-panel rp-tech" role="tabpanel" id="{sid}-p-technical" aria-labelledby="{sid}-technical">',
  '\t\t\t\t\t' + s['tech'],
  '\t\t\t\t\t</div>',
  '\t\t\t\t</div>',

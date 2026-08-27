@@ -1,58 +1,87 @@
-# research_new.html — drop-in files
+# Remaining changes — on top of commit 0793b58
 
-Copy the contents of this folder into the root of the `mallicklab` repo,
-preserving the directory structure. Nothing here overwrites an existing file.
+The dead-widget cleanup, `people.json`, the four section images and
+`research_content.md` are already pushed. Nothing here repeats them.
 
-```
-research_new.html                        the page
-images/figs/section1-ecology.jpg         }
-images/figs/section3-coordination.jpg    } section figures (interim; Michelle's
-images/figs/section4-interpretability.jpg} diagrams will replace these)
-images/figs/section5-infrastructure.jpg  }
-research_content.md                      source text for the page
-build_research.py                        regenerates the page from that text
-```
-
-Sections 2 and 3 also use `images/figs/BiomarkerModeling.png` and
-`images/figs/IntegratedOmics.png`, which are already in the repo.
-
-## What is live and what is not
-
-`research.html` is untouched and still serves the site. `research_new.html` is
-a draft, reachable only by direct URL — nothing in the site navigation links to
-it. It carries `<meta name="robots" content="noindex,nofollow">` so that it does
-not appear in search results while it is being reviewed.
-
-## Editing the text
-
-Edit `research_content.md`, then from the repo root:
+## 1. Copy these four files to the repo root
 
 ```
-python3 build_research.py
+research.html        the five-area page, now live (replaces the old 3-area page)
+index.html           slider rebuilt (6 slides, controls fixed); feed links removed
+build_research.py    updated: targets research.html, adds deep-link anchors
+build_slider.py      new: regenerates the slider from a SLIDES list
 ```
 
-The script rewrites only the article body of `research_new.html` and injects its
-stylesheet and tab script. Site header, navigation, pager and footer are left
-alone. It is idempotent, so running it repeatedly is safe.
+## 2. Delete 23 stale files
 
-Editing the HTML directly also works, but the next build will overwrite it.
-Prefer the markdown.
+Nothing links to any of them. Verified with a reachability walk from
+`index.html`, then a local-link check across all 496 references on the
+remaining pages.
 
-## Going live
+The full list is in `DELETE_THESE.txt`. As one command:
 
-1. In `build_research.py`, change `PAGE` from `research_new.html` to
-   `research.html`.
-2. Run the script. The `noindex` directive removes itself automatically when the
-   target is `research.html`.
-3. Delete `research_new.html`.
+```
+git rm $(cat DELETE_THESE.txt | tr '\n' ' ')
+```
 
-## Notes
+What they were:
 
-- **No external fonts.** The page uses Lato, which the site already loads.
-- **Anchors.** Each section has an id — `#ecology`, `#biomarkers`, `#networks`,
-  `#meaningful-ai`, `#methods` — so individual areas can be linked directly.
-- **JavaScript.** The Simple/Technical summary tabs need it. Without it, both
-  summaries render stacked and labelled, so nothing is hidden from a reader or a
-  crawler that never runs the script.
-- **Citations.** 36 links into `pdfs/`, all verified to resolve against the
-  current repo.
+- **`*87e8.html`** (7) — HTTrack mirrors of `?tmpl=component&print=1`, the print
+  layouts. Frozen at mirror time: `research87e8.html` still holds the old
+  three-area text, and `pubs87e8.html` renders zero publications against 125 in
+  the live page. The gear menu that linked them is gone.
+- **`component/mailto/`** (8) — email-a-friend forms POSTing to a Joomla
+  endpoint that no longer exists.
+- **`index-2.html`, `indexa699.html`** — homepage duplicates.
+- **`index7b17.html`, `indexc0d0.html`** — Joomla RSS and Atom feeds, both with
+  **zero entries**. They were reachable only through `<link rel="alternate">`
+  autodiscovery; those two lines are already removed from the `index.html` in
+  this folder, so the files and the page change go together.
+- **`research_new.html`** — its content is now `research.html`.
+- **`futzedpixels.png`** (both sizes) — artwork for the retired "integrated
+  omics" slide.
+
+Kept despite being unlinked: `peeps_template.html` and `pubs_template.html`
+(generator inputs), `pubmed-import-tool.html` (the Publication Manager that
+reads `publications.json`), and the 0-byte guards under `templates/`.
+
+## Deep links
+
+Tab controls carry linkable ids, so anything can open a specific summary:
+
+| Area | Section | Simple | Technical |
+|---|---|---|---|
+| Tumor Ecology | `#ecology` | `#ecology-simple` | `#ecology-technical` |
+| Biomarker Discovery | `#biomarkers` | `#biomarkers-simple` | `#biomarkers-technical` |
+| Systems Biology | `#networks` | `#networks-simple` | `#networks-technical` |
+| Meaningful AI | `#meaningful-ai` | `#meaningful-ai-simple` | `#meaningful-ai-technical` |
+| Methods & Technology | `#methods` | `#methods-simple` | `#methods-technical` |
+
+The page reads the hash on load and on change, opens the matching summary and
+scrolls the section into view, re-running on `load` so images shifting the
+layout can't leave the target off-screen.
+
+## Regenerating
+
+Both scripts sit at the repo root beside `generate_pubs.py`, resolve paths
+relative to themselves, and are idempotent.
+
+```
+python3 build_research.py    # research.html from research_content.md
+python3 build_slider.py      # the index.html slider from its SLIDES list
+```
+
+Edit `research_content.md` for wording, or `SLIDES` in `build_slider.py` for
+slide order, captions and links. Editing the HTML directly works but the next
+run overwrites it.
+
+## Still open
+
+- **proteoWizard slide** points at `research.html#methods-simple`. Change
+  `SLIDES[5]['link']` to `proteowizard.html` once that page exists.
+- **`proteowizard.html`** not built: outside the top nav, linked from the slider
+  and the research page, pointing out to <http://www.proteowizard.org>.
+- **Magic** not yet added as a top-level nav category.
+- **Section figures** are interim; Michelle's diagrams can reuse the filenames.
+- **`README.md` in the repo** still describes the draft workflow and is now
+  stale — replace or remove it.
