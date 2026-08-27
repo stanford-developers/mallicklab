@@ -170,6 +170,14 @@ STYLE = '''
      Deliberately not !important, so the 767px mobile rule still wins. ---- */
   #jm-bar:not(.noheader) #jm-bar-in { padding-left: 0; padding-right: 0; }
 
+  /* The header row overflows its own container by a hair: .container-fluid is
+     capped at 962px, and with Lato the logo block (380px) plus the nav (583px
+     at the theme's 14px item padding) comes to 963px. One pixel over, so the
+     nav wraps below the logo at every window size, not just narrow ones.
+     Trimming the item padding to 11px gives the row ~41px of slack, which is
+     enough headroom for font rendering differences across platforms. */
+  #jm-djmenu ul.dj-main > li > a { padding-left: 11px; padding-right: 11px; }
+
   /* the whole caption is the click target for the slide */
   #dj-tabber5m98 .dj-slide-link { display: block; color: inherit; text-decoration: none; }
   #dj-tabber5m98 .dj-slide-link .dj-slide-title,
