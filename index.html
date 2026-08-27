@@ -37,74 +37,7 @@
 	
 	</style>
 	<script type="application/json" class="joomla-script-options new">{"csrf.token":"b4a1f2c57bbb2fc49eeddb0858fb603f","system.paths":{"root":"","base":""}}</script>
-	<script src="components/com_djmediatools/assets/js/powertools-1.2.0.js" type="text/javascript"></script>
-	<script src="components/com_djmediatools/layouts/slideshow/js/slideshow.js" type="text/javascript"></script>
-	<script src="components/com_djmediatools/layouts/tabber/js/tabber.js" type="text/javascript"></script>
-	<script src="modules/mod_djmenu/assets/js/dropline-helper.js" type="text/javascript"></script>
-	<script src="modules/mod_djmenu/assets/js/djselect.js" type="text/javascript"></script>
-	<script src="modules/mod_djmenu/assets/js/djmenu.js" type="text/javascript"></script>
-	<script type="text/javascript">
-jQuery(window).on('load',  function() {
-				new JCaption('img.caption');
-			});
-jQuery(function($) {
-			SqueezeBox.initialize({});
-			SqueezeBox.assign($('a.modal').get(), {
-				parse: 'rel'
-			});
-		});
-
-		window.jModalClose = function () {
-			SqueezeBox.close();
-		};
-		
-		// Add extra modal close functionality for tinyMCE-based editors
-		document.onreadystatechange = function () {
-			if (document.readyState == 'interactive' && typeof tinyMCE != 'undefined' && tinyMCE)
-			{
-				if (typeof window.jModalClose_no_tinyMCE === 'undefined')
-				{	
-					window.jModalClose_no_tinyMCE = typeof(jModalClose) == 'function'  ?  jModalClose  :  false;
-					
-					jModalClose = function () {
-						if (window.jModalClose_no_tinyMCE) window.jModalClose_no_tinyMCE.apply(this, arguments);
-						tinyMCE.activeEditor.windowManager.close();
-					};
-				}
-		
-				if (typeof window.SqueezeBoxClose_no_tinyMCE === 'undefined')
-				{
-					if (typeof(SqueezeBox) == 'undefined')  SqueezeBox = {};
-					window.SqueezeBoxClose_no_tinyMCE = typeof(SqueezeBox.close) == 'function'  ?  SqueezeBox.close  :  false;
-		
-					SqueezeBox.close = function () {
-						if (window.SqueezeBoxClose_no_tinyMCE)  window.SqueezeBoxClose_no_tinyMCE.apply(this, arguments);
-						tinyMCE.activeEditor.windowManager.close();
-					};
-				}
-			}
-		};
-		
-jQuery(function($) {
-			 $('.hasTip').each(function() {
-				var title = $(this).attr('title');
-				if (title) {
-					var parts = title.split('::', 2);
-					var mtelement = document.id(this);
-					mtelement.store('tip:title', parts[0]);
-					mtelement.store('tip:text', parts[1]);
-				}
-			});
-			var JTooltips = new Tips($('.hasTip').get(), {"maxTitleChars": 50,"fixed": false});
-		});
-window.addEvent('domready',function(){ if(!this.DJSlideshow5m98) this.DJSlideshow5m98 = new DJImageTabber('dj-tabber5m98',{autoplay: 1,pause_autoplay: 1,transition: Fx.Transitions.Expo.easeInOut,duration: 900,delay: 5000,slider_type: 'fade',desc_effect: 'fade',width: 700,height: 350,spacing: 1,navi_margin: 51,preload: 0,tab_height: 80,tab_indicator: 2}) });
-window.addEvent('domready',function(){document.id('dj-main90').addClass('allowHide')});
-window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('dj-main90'), {wrapper: document.id('jm-djmenu'), transition: 'cubic:out', duration: 900, delay: 5000,
-		height_fx: true, width_fx: true, opacity_fx: true,
-		height_fx_sub: true, width_fx_sub: true, opacity_fx_sub: true }); });
-	</script>
-	
-	<!-- template path for styleswitcher script -->
+<!-- template path for styleswitcher script -->
 	
 			<link href="images/favicon.ico" rel="Shortcut Icon" />
 		

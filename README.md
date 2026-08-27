@@ -1,63 +1,89 @@
-# Slider timing + header alignment — on top of commit 1423deb
+# Header wrap fix + dead JavaScript removal — on top of commit 1423deb
 
-Two files: `index.html` and `build_slider.py`.
+## 1. Header wrap (the original problem)
 
-## 1. Dwell was still ~9s
+Your console output settled it:
 
-I had been editing the wrong thing. `index.html` contains a hand-written
-vanilla-JS slider at the end of `<body>`; the MooTools `new DJImageTabber(...)`
-call near the top never initialises in the static mirror (no such object exists
-on `window` at runtime), so that whole options block is dead code. The real
-rotation is a plain `setInterval` with its own `var DELAY = 9000`.
+```
+viewport: 1838   container: 962   logo: 380   menu: 583   slack: -0
+barPad: "0px"    pad: "14px"      lato: true  wrapped: true
+```
 
-Confirmed by setting `delay: 2000` in the MooTools config and measuring no
-change at all — intervals stayed at exactly 9.0s.
+At 1838px it still wrapped, so this was never about window width.
+`.container-fluid` is capped at 962px regardless, and with Lato the logo block
+(380) plus the nav (583) comes to **963px** — one pixel over, so the nav dropped
+below the logo at every size.
 
-Now `var DELAY = 5000` and `var DURATION = 900`, written by `build_slider.py`
-from `DELAY_MS` / `DURATION_MS`. Measured: five consecutive intervals at 5.00s.
-The dead MooTools options are kept in sync so nobody edits that number later
-and concludes it does nothing.
+`barPad: 0px` confirms the earlier padding fix deployed and applied. It fixed a
+real home-vs-inner-page inconsistency, but that one only bites below ~1010px,
+so it was never your symptom.
 
-Also fixed while in there: the inline script positioned the active-tab
-indicator with a hard-coded `current * 80`, left from when tabs were 80px tall.
-Since the tabs now divide the strip evenly it drifted a pixel per row. It
-measures the tab instead — verified aligned on all six.
+Fix: nav item padding 14px -> 11px, taking the nav from 583 to 541 and turning
+-1px of slack into **+41px**. Computed from your Lato measurement, not from my
+sandbox, which cannot load Lato and was running ~12% narrow.
 
-## 2. Nav wrapping below the logo on the home page
+## 2. Dead JavaScript removed (`strip_dead_js.py`)
 
-Not a regression: this predates all of my changes, back to the original HTTrack
-import. And it isn't font size — nav metrics are identical on every page
-(19px Lato 300, same padding, same 575px menu width).
+Nine of ten pages loaded scripts needing MooTools or jQuery without loading
+either library, so every one threw on load. Removed: **33 script tags and 5
+inline blocks across 10 files, ~13.8 KB.**
 
-`custom_css_*.css` pads `#jm-bar-in` 25px left and right on every page, and the
-theme's more specific `#jm-bar.noheader #jm-bar-in` zeroes it again. Inner pages
-carry `.noheader`; the home page cannot, because it has the `#jm-header` slider
-region that tucks up into the bar. So the home page had 50px less usable width
-and wrapped first.
+Console errors, before and after:
 
-Fixed with `#jm-bar:not(.noheader) #jm-bar-in { padding-left: 0; padding-right: 0 }`.
-Deliberately without `!important`, so the 767px mobile rule (10px) still wins.
+| page | before | after |
+|---|---|---|
+| index.html | 7 | 0 |
+| research.html | 3 | 0 |
+| bio.html | 1 | 0 |
+| faq / funding / peeps / pubs / resources | 3 each | 0 |
 
-All pages now wrap at the same width (≤950px instead of ≤1000px for home).
+Nothing user-facing was lost. The slider runs on the hand-written vanilla
+script; the nav has no submenus on any page, so `djmenu.js` had nothing to do
+even where it worked.
 
-## Note on the injected block
+### The one behaviour change: bio.html mobile nav
 
-The generated stylesheet block is renamed from `slider-controls` to
-`index-fixes`, since it now covers the header too. The strip pattern matches
-both names, so regenerating won't leave a duplicate.
+`djselect.js` swapped the nav for a `<select>` under 800px, paired with the
+inline rule `#dj-main90.allowHide { display:none }` and an inline MooTools call
+that adds that class. That call threw everywhere except bio, which is why every
+other page already fell back to a plain link list on mobile. Removing the script
+and the class-adder together makes bio match: **all pages now show the link
+list**. Verified 7 visible nav links at 480px on every page.
+
+`bio.html` keeps jquery/mootools, since `templates/.../js/scripts.js` genuinely
+uses jQuery for the back-to-top fade. Its other unused Joomla libraries
+(caption, modal, bootstrap, styleswitcher) are left alone — removable later,
+but not dead in the same sense.
+
+### Analytics — worth knowing
+
+The Google Analytics block on `bio.html` was removed. It could not work:
+
+```js
+_gaq.push(['_setAccount', '   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r']);
+```
+
+Two GA snippets were merged at some point, overwriting the account id with
+fragments of the other and leaving unescaped quotes, so the block was a syntax
+error and never executed. It also targeted `ga.js` (Classic Analytics), which
+Google shut down.
+
+**bio.html was the only page with any analytics, so the site has none and has
+not had any for some time.** If you want it, that is a fresh GA4 tag on every
+page — a new task, not a restoration.
+
+## Verified
+
+- 0 console errors on all 8 content pages
+- Nav works at 1280px and 480px on every page (7 links each)
+- Slider: 6 slides, deep link to `research.html#meaningful-ai-simple` opens the
+  right panel
+- Research tabs still work
+- All four generators re-run with no change, so nothing resurrects
 
 ## Regenerating
 
 ```
+python3 strip_dead_js.py    # idempotent, safe to re-run
 python3 build_slider.py
 ```
-
-Timing lives in `DELAY_MS` / `DURATION_MS` at the top.
-
-## Still open
-
-- **Pause/play timing.** `setInterval` keeps firing while paused and the handler
-  just skips, so un-pausing lands mid-cycle and the next advance comes early.
-  Fixing it properly means `clearInterval` on pause and `startTimer()` on play.
-  Left alone as it's a behaviour change rather than a bug fix.
-- proteoWizard page, Magic nav category, Michelle's diagrams, stale repo README.
