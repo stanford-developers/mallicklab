@@ -7,7 +7,7 @@ The dead-widget cleanup, `people.json`, the four section images and
 
 ```
 research.html        the five-area page, now live (replaces the old 3-area page)
-index.html           slider rebuilt (6 slides, controls fixed); feed links removed
+index.html           slider rebuilt; timing, tab strip and controls fixed
 build_research.py    updated: targets research.html, adds deep-link anchors
 build_slider.py      new: regenerates the slider from a SLIDES list
 ```
@@ -16,38 +16,44 @@ build_slider.py      new: regenerates the slider from a SLIDES list
 
 Nothing links to any of them. Verified with a reachability walk from
 `index.html`, then a local-link check across all 496 references on the
-remaining pages.
-
-The full list is in `DELETE_THESE.txt`. As one command:
+remaining pages. The list is in `DELETE_THESE.txt`:
 
 ```
 git rm $(cat DELETE_THESE.txt | tr '\n' ' ')
 ```
 
-What they were:
-
-- **`*87e8.html`** (7) — HTTrack mirrors of `?tmpl=component&print=1`, the print
-  layouts. Frozen at mirror time: `research87e8.html` still holds the old
-  three-area text, and `pubs87e8.html` renders zero publications against 125 in
-  the live page. The gear menu that linked them is gone.
-- **`component/mailto/`** (8) — email-a-friend forms POSTing to a Joomla
-  endpoint that no longer exists.
+- **`*87e8.html`** (7) — HTTrack mirrors of `?tmpl=component&print=1`. Frozen at
+  mirror time: `research87e8.html` still holds the old three-area text and
+  `pubs87e8.html` renders zero publications against 125 live.
+- **`component/mailto/`** (8) — forms POSTing to a Joomla endpoint that is gone.
 - **`index-2.html`, `indexa699.html`** — homepage duplicates.
-- **`index7b17.html`, `indexc0d0.html`** — Joomla RSS and Atom feeds, both with
-  **zero entries**. They were reachable only through `<link rel="alternate">`
-  autodiscovery; those two lines are already removed from the `index.html` in
-  this folder, so the files and the page change go together.
+- **`index7b17.html`, `indexc0d0.html`** — RSS and Atom stubs with zero entries.
+  `build_slider.py` strips the two `<link rel="alternate">` tags that pointed at
+  them, so page and files go together.
 - **`research_new.html`** — its content is now `research.html`.
 - **`futzedpixels.png`** (both sizes) — artwork for the retired "integrated
   omics" slide.
 
-Kept despite being unlinked: `peeps_template.html` and `pubs_template.html`
-(generator inputs), `pubmed-import-tool.html` (the Publication Manager that
-reads `publications.json`), and the 0-byte guards under `templates/`.
+Kept though unlinked: `peeps_template.html`, `pubs_template.html` (generator
+inputs), `pubmed-import-tool.html`, and the 0-byte guards under `templates/`.
+
+## Slider fixes in this round
+
+- **Timing.** Was 9s dwell with a 3s cross-fade — about twelve seconds a slide.
+  Now 5s and 900ms, set via `DELAY_MS` / `DURATION_MS` at the top of
+  `build_slider.py`.
+- **Missing separator.** The theme fixes tab height at 80px and zeroes the
+  margin on `:nth-last-child(2)`, both tuned for the original seven slides. With
+  six that overflowed the strip and dropped one separator. Tabs now divide the
+  strip evenly whatever the count, with a separator between each and none
+  trailing.
+- **Black overview/news band.** A regression I introduced: `.dj-tab-indicator`
+  lives *inside* `.dj-tabs-in`, and the `</div>` following it is what closes
+  that container — so emitting my own closing tag left one extra `</div>`, which
+  closed `#jm-allpage` early and dropped everything below the slider outside the
+  white background. Fixed; div balance verified.
 
 ## Deep links
-
-Tab controls carry linkable ids, so anything can open a specific summary:
 
 | Area | Section | Simple | Technical |
 |---|---|---|---|
@@ -56,10 +62,6 @@ Tab controls carry linkable ids, so anything can open a specific summary:
 | Systems Biology | `#networks` | `#networks-simple` | `#networks-technical` |
 | Meaningful AI | `#meaningful-ai` | `#meaningful-ai-simple` | `#meaningful-ai-technical` |
 | Methods & Technology | `#methods` | `#methods-simple` | `#methods-technical` |
-
-The page reads the hash on load and on change, opens the matching summary and
-scrolls the section into view, re-running on `load` so images shifting the
-layout can't leave the target off-screen.
 
 ## Regenerating
 
@@ -71,10 +73,6 @@ python3 build_research.py    # research.html from research_content.md
 python3 build_slider.py      # the index.html slider from its SLIDES list
 ```
 
-Edit `research_content.md` for wording, or `SLIDES` in `build_slider.py` for
-slide order, captions and links. Editing the HTML directly works but the next
-run overwrites it.
-
 ## Still open
 
 - **proteoWizard slide** points at `research.html#methods-simple`. Change
@@ -83,5 +81,4 @@ run overwrites it.
   and the research page, pointing out to <http://www.proteowizard.org>.
 - **Magic** not yet added as a top-level nav category.
 - **Section figures** are interim; Michelle's diagrams can reuse the filenames.
-- **`README.md` in the repo** still describes the draft workflow and is now
-  stale — replace or remove it.
+- **`README.md` in the repo** still describes the draft workflow and is stale.

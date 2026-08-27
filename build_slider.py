@@ -17,6 +17,12 @@ REPO = os.path.dirname(os.path.abspath(__file__))
 PAGE = os.path.join(REPO, 'index.html')
 CACHE = 'media/djmediatools/cache'
 
+# Slideshow timing. `delay` is the dwell on each slide, `duration` the length
+# of the cross-fade. The mirrored defaults were 9000/3000, which meant twelve
+# seconds a slide.
+DELAY_MS    = 5000
+DURATION_MS = 900
+
 # Order follows the research page, with meaningful AI pulled to the front.
 # `link` targets research.html anchors; -simple opens the plain-language
 # summary for that area. See build_research.py for the anchor ids.
@@ -136,6 +142,24 @@ STYLE = '''
   }
   #dj-tabber5m98 .dj-play:hover,
   #dj-tabber5m98 .dj-pause:hover { opacity: 1; }
+  /* Tab strip. The theme sets a fixed 80px tab height and zeroes the margin on
+     :nth-last-child(2) - both tuned for the original seven slides, which with
+     six leaves the strip overflowing and one separator missing. Let the tabs
+     divide the strip evenly instead, whatever the count. */
+  #dj-tabber5m98 .dj-tabs-in {
+    display: flex; flex-direction: column; height: 100%;
+  }
+  /* separator between tabs only: :last-of-type can't be used because the
+     indicator div is the real last child of .dj-tabs-in */
+  #dj-tabber5m98 .dj-tabs-in .dj-tab {
+    flex: 1 1 0; height: auto !important; min-height: 0;
+    margin-bottom: 0 !important;
+  }
+  #dj-tabber5m98 .dj-tabs-in .dj-tab + .dj-tab { margin-top: 2px !important; }
+  #dj-tabber5m98 .dj-tabs-in .dj-tab .dj-tab-in {
+    display: flex; align-items: center; height: 100%;
+  }
+
   /* the whole caption is the click target for the slide */
   #dj-tabber5m98 .dj-slide-link { display: block; color: inherit; text-decoration: none; }
   #dj-tabber5m98 .dj-slide-link .dj-slide-title,
@@ -170,9 +194,25 @@ def main():
     if not m:
         sys.exit('could not locate the dj-tabs-in block')
     tabs = ''.join(tab_block(s, i == 0) for i, s in enumerate(SLIDES))
+    # NB: .dj-tab-indicator lives inside .dj-tabs-in, and the </div> that
+    # follows the indicator is what closes .dj-tabs-in. So no closing tag is
+    # emitted here - adding one closes #jm-allpage early and the page loses
+    # its white background below the slider.
     page = (page[:m.start()]
-            + '<div class="dj-tabs-in">\n' + tabs.rstrip('\n') + '\n\t\t\t</div>\n\t\t\t'
+            + '<div class="dj-tabs-in">\n' + tabs.rstrip('\n') + '\n\t\t\t'
             + page[m.end():])
+
+    # --- dead feed autodiscovery ---------------------------------------
+    # index7b17.html / indexc0d0.html are Joomla RSS + Atom stubs with zero
+    # entries, and are being deleted. Drop the <link rel="alternate"> pair so
+    # nothing advertises them.
+    page = re.sub(r'\n\t<link href="index(?:7b17|c0d0)\.html\?format=feed[^>]*/>', '', page)
+
+    # --- slideshow timing ----------------------------------------------
+    page, n = re.subn(r'(duration:\s*)\d+', r'\g<1>' + str(DURATION_MS), page)
+    page, n2 = re.subn(r'(delay:\s*)\d+', r'\g<1>' + str(DELAY_MS), page)
+    if not (n and n2):
+        sys.exit('could not find the DJImageTabber timing options')
 
     # --- control CSS (idempotent) --------------------------------------
     page = re.sub(r'\n  /\* BEGIN slider-controls.*?/\* END slider-controls \*/\n',

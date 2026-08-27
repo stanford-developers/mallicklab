@@ -97,9 +97,9 @@ jQuery(function($) {
 			});
 			var JTooltips = new Tips($('.hasTip').get(), {"maxTitleChars": 50,"fixed": false});
 		});
-window.addEvent('domready',function(){ if(!this.DJSlideshow5m98) this.DJSlideshow5m98 = new DJImageTabber('dj-tabber5m98',{autoplay: 1,pause_autoplay: 1,transition: Fx.Transitions.Expo.easeInOut,duration: 3000,delay: 9000,slider_type: 'fade',desc_effect: 'fade',width: 700,height: 350,spacing: 1,navi_margin: 51,preload: 0,tab_height: 80,tab_indicator: 2}) });
+window.addEvent('domready',function(){ if(!this.DJSlideshow5m98) this.DJSlideshow5m98 = new DJImageTabber('dj-tabber5m98',{autoplay: 1,pause_autoplay: 1,transition: Fx.Transitions.Expo.easeInOut,duration: 900,delay: 5000,slider_type: 'fade',desc_effect: 'fade',width: 700,height: 350,spacing: 1,navi_margin: 51,preload: 0,tab_height: 80,tab_indicator: 2}) });
 window.addEvent('domready',function(){document.id('dj-main90').addClass('allowHide')});
-window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('dj-main90'), {wrapper: document.id('jm-djmenu'), transition: 'cubic:out', duration: 200, delay: 1200,
+window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('dj-main90'), {wrapper: document.id('jm-djmenu'), transition: 'cubic:out', duration: 900, delay: 5000,
 		height_fx: true, width_fx: true, opacity_fx: true,
 		height_fx_sub: true, width_fx_sub: true, opacity_fx_sub: true }); });
 	</script>
@@ -229,6 +229,24 @@ window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('
   }
   #dj-tabber5m98 .dj-play:hover,
   #dj-tabber5m98 .dj-pause:hover { opacity: 1; }
+  /* Tab strip. The theme sets a fixed 80px tab height and zeroes the margin on
+     :nth-last-child(2) - both tuned for the original seven slides, which with
+     six leaves the strip overflowing and one separator missing. Let the tabs
+     divide the strip evenly instead, whatever the count. */
+  #dj-tabber5m98 .dj-tabs-in {
+    display: flex; flex-direction: column; height: 100%;
+  }
+  /* separator between tabs only: :last-of-type can't be used because the
+     indicator div is the real last child of .dj-tabs-in */
+  #dj-tabber5m98 .dj-tabs-in .dj-tab {
+    flex: 1 1 0; height: auto !important; min-height: 0;
+    margin-bottom: 0 !important;
+  }
+  #dj-tabber5m98 .dj-tabs-in .dj-tab + .dj-tab { margin-top: 2px !important; }
+  #dj-tabber5m98 .dj-tabs-in .dj-tab .dj-tab-in {
+    display: flex; align-items: center; height: 100%;
+  }
+
   /* the whole caption is the click target for the slide */
   #dj-tabber5m98 .dj-slide-link { display: block; color: inherit; text-decoration: none; }
   #dj-tabber5m98 .dj-slide-link .dj-slide-title,
@@ -455,7 +473,6 @@ window.addEvent('domready',function(){ this.djmenu90 = new DJMenus(document.id('
 						proteoWizard</span>
 					</span>
 				</div>
-			</div>
 			<div class="dj-tab-indicator  dj-tab-indicator-right"></div>
 							</div>
 		</div>
