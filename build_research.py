@@ -274,16 +274,35 @@ SCRIPT = """
 		});
 
 		/* Deep links. #ecology jumps to the section; #ecology-simple and
-		   #ecology-technical also open that summary. Both the initial load and
-		   later hash changes are handled. */
+		   #ecology-technical also open that summary and jump there. Both the
+		   initial load and later hash changes are handled.
+
+		   Native anchor scrolling is not enough on its own: a browser can only
+		   scroll as far as the document is tall, so a section near the end of
+		   the page (meaningful-ai, methods) cannot be brought to the top if
+		   there is nothing left below it to scroll into. ensureScrollRoom pads
+		   the bottom of the page just enough to make that possible, reading
+		   scroll-margin-top from the CSS so the two stay in sync automatically. */
+		function ensureScrollRoom(el) {
+			var margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+			var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+			var needed = el.getBoundingClientRect().top + window.scrollY - margin;
+			var short = needed - maxScroll;
+			if (short > 0) {
+				document.body.style.paddingBottom =
+					(parseFloat(getComputedStyle(document.body).paddingBottom) || 0) + short + 'px';
+			}
+		}
 		function openFromHash() {
 			var id = (location.hash || '').replace(/^#/, '');
 			if (!id) { return; }
-			var tab = document.getElementById(id);
-			if (!tab || !tab.classList.contains('rp-tab')) { return; }
-			var area = tab.closest('.rp-area');
-			if (!area || !area._rpShow) { return; }
-			if (tab.getAttribute('aria-selected') !== 'true') { area._rpShow(tab); }
+			var el = document.getElementById(id);
+			if (!el) { return; }
+			var area = el.classList.contains('rp-tab') ? el.closest('.rp-area') : el;
+			if (!area || !area.classList.contains('rp-area')) { return; }
+			if (el.classList.contains('rp-tab') && area._rpShow
+					&& el.getAttribute('aria-selected') !== 'true') { area._rpShow(el); }
+			ensureScrollRoom(area);
 			area.scrollIntoView();
 		}
 		openFromHash();
