@@ -277,12 +277,26 @@ SCRIPT = """
 		   #ecology-technical also open that summary and jump there. Both the
 		   initial load and later hash changes are handled.
 
-		   Native anchor scrolling is not enough on its own: a browser can only
-		   scroll as far as the document is tall, so a section near the end of
-		   the page (meaningful-ai, methods) cannot be brought to the top if
-		   there is nothing left below it to scroll into. ensureScrollRoom pads
-		   the bottom of the page just enough to make that possible, reading
-		   scroll-margin-top from the CSS so the two stay in sync automatically. */
+		   Two browser behaviours fight our own scroll correction, so both are
+		   worked around explicitly:
+
+		   1. A short page cannot be scrolled far enough to bring a section
+		      near the very end to the top of the viewport (nothing left below
+		      it to scroll into). ensureScrollRoom pads the bottom of the page
+		      by exactly the shortfall.
+
+		   2. Safari can perform its own native scroll-to-fragment on whatever
+		      element has the id in the URL, and it can do this *after* our
+		      correction has already run, silently overriding it. Since the id
+		      is the small tab button (e.g. #ecology-simple), not the section,
+		      that native jump lands on the button rather than the section
+		      top. We strip the hash immediately so Safari has nothing left to
+		      act on, scroll to the right place ourselves, then restore the
+		      hash afterward via replaceState, which does not itself scroll. */
+		var pendingHash = location.hash;
+		if (pendingHash) {
+			history.replaceState(null, '', location.pathname + location.search);
+		}
 		function ensureScrollRoom(el) {
 			var margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
 			var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -293,8 +307,8 @@ SCRIPT = """
 					(parseFloat(getComputedStyle(document.body).paddingBottom) || 0) + short + 'px';
 			}
 		}
-		function openFromHash() {
-			var id = (location.hash || '').replace(/^#/, '');
+		function openFromHash(hash) {
+			var id = (hash || '').replace(/^#/, '');
 			if (!id) { return; }
 			var el = document.getElementById(id);
 			if (!el) { return; }
@@ -304,12 +318,14 @@ SCRIPT = """
 					&& el.getAttribute('aria-selected') !== 'true') { area._rpShow(el); }
 			ensureScrollRoom(area);
 			area.scrollIntoView();
+			history.replaceState(null, '', '#' + id);
 		}
-		openFromHash();
+		openFromHash(pendingHash);
 		/* Re-run once images have loaded: they can shift the layout after the
-		   first scroll, leaving the target section off-screen. */
-		window.addEventListener('load', openFromHash);
-		window.addEventListener('hashchange', openFromHash);
+		   first scroll, leaving the target section off-screen. Uses
+		   pendingHash, not location.hash, since that was cleared above. */
+		window.addEventListener('load', function () { openFromHash(pendingHash); });
+		window.addEventListener('hashchange', function () { openFromHash(location.hash); });
 	})();
 	</script>
 """

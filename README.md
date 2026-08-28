@@ -1,89 +1,58 @@
-# Header wrap fix + dead JavaScript removal — on top of commit 1423deb
+# Safari anchor-scroll fix — on top of commit 2c6877f
 
-## 1. Header wrap (the original problem)
+Two files: `research.html` and `build_research.py`.
 
-Your console output settled it:
+## What your console output showed
 
 ```
-viewport: 1838   container: 962   logo: 380   menu: 583   slack: -0
-barPad: "0px"    pad: "14px"      lato: true  wrapped: true
+hash: "#ecology-simple"   section_id: "ecology"   section_top: -134
+scrollY: 720              scrollMarginTop: "18px"   bodyPad: "0px"
 ```
 
-At 1838px it still wrapped, so this was never about window width.
-`.container-fluid` is capped at 962px regardless, and with Lato the logo block
-(380) plus the nav (583) comes to **963px** — one pixel over, so the nav dropped
-below the logo at every size.
+Working the numbers: `scrollY + section_top` gives the section's real position
+in the document, 586. Landing correctly needs `scrollY = 586 - 18 = 568`. The
+page was actually at 720 — **152px too far**, and 152px is close to how far
+down the "Learn more" tab row sits inside that section (thumbnail + title +
+question + blurb). That points at a specific, known Safari behaviour: Safari
+can perform its **own** native scroll-to-fragment on whatever element has the
+id in the URL, and it can do this *after* our corrective script has already
+run, silently overriding it. Since the id in the URL is `#ecology-simple` —
+the small "Simple summary" button, not the section — Safari's native jump
+lands on the button. That's "the Learn More row."
 
-`barPad: 0px` confirms the earlier padding fix deployed and applied. It fixed a
-real home-vs-inner-page inconsistency, but that one only bites below ~1010px,
-so it was never your symptom.
+This also explains why it couldn't be reproduced in Chromium: Chromium doesn't
+have this deferred-native-scroll behaviour, so every test I ran locally showed
+the fix already working.
 
-Fix: nav item padding 14px -> 11px, taking the nav from 583 to 541 and turning
--1px of slack into **+41px**. Computed from your Lato measurement, not from my
-sandbox, which cannot load Lato and was running ~12% narrow.
+## The fix
 
-## 2. Dead JavaScript removed (`strip_dead_js.py`)
+Strip the hash from the URL the instant our script runs, so Safari has
+nothing left to act on natively. Do the scroll ourselves using the saved
+value. Restore the hash afterward via `history.replaceState`, which does not
+itself trigger a scroll — so the URL still looks like `research.html#ecology-simple`
+and stays shareable/bookmarkable.
 
-Nine of ten pages loaded scripts needing MooTools or jQuery without loading
-either library, so every one threw on load. Removed: **33 script tags and 5
-inline blocks across 10 files, ~13.8 KB.**
+## Verified (Chromium only — see caveat below)
 
-Console errors, before and after:
+- All five anchor forms land at exactly 18px from top
+- The URL hash is correctly restored after the fix runs
+- The correct summary panel opens in each case
+- In-page navigation between two hash targets, no reload, still works
+- The home-page slider's click-through still opens the right section and panel
+- Build is idempotent
 
-| page | before | after |
-|---|---|---|
-| index.html | 7 | 0 |
-| research.html | 3 | 0 |
-| bio.html | 1 | 0 |
-| faq / funding / peeps / pubs / resources | 3 each | 0 |
+## I cannot test this directly in Safari
 
-Nothing user-facing was lost. The slider runs on the hand-written vanilla
-script; the nav has no submenus on any page, so `djmenu.js` had nothing to do
-even where it worked.
-
-### The one behaviour change: bio.html mobile nav
-
-`djselect.js` swapped the nav for a `<select>` under 800px, paired with the
-inline rule `#dj-main90.allowHide { display:none }` and an inline MooTools call
-that adds that class. That call threw everywhere except bio, which is why every
-other page already fell back to a plain link list on mobile. Removing the script
-and the class-adder together makes bio match: **all pages now show the link
-list**. Verified 7 visible nav links at 480px on every page.
-
-`bio.html` keeps jquery/mootools, since `templates/.../js/scripts.js` genuinely
-uses jQuery for the back-to-top fade. Its other unused Joomla libraries
-(caption, modal, bootstrap, styleswitcher) are left alone — removable later,
-but not dead in the same sense.
-
-### Analytics — worth knowing
-
-The Google Analytics block on `bio.html` was removed. It could not work:
-
-```js
-_gaq.push(['_setAccount', '   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r']);
-```
-
-Two GA snippets were merged at some point, overwriting the account id with
-fragments of the other and leaving unescaped quotes, so the block was a syntax
-error and never executed. It also targeted `ga.js` (Classic Analytics), which
-Google shut down.
-
-**bio.html was the only page with any analytics, so the site has none and has
-not had any for some time.** If you want it, that is a fresh GA4 tag on every
-page — a new task, not a restoration.
-
-## Verified
-
-- 0 console errors on all 8 content pages
-- Nav works at 1280px and 480px on every page (7 links each)
-- Slider: 6 slides, deep link to `research.html#meaningful-ai-simple` opens the
-  right panel
-- Research tabs still work
-- All four generators re-run with no change, so nothing resurrects
+I don't have access to a Safari environment, only headless Chromium. The fix
+is built on a real, working theory backed by the arithmetic in your console
+output, and a documented Safari behaviour (deferred native fragment scroll),
+but I have not been able to confirm the fix itself in the one browser where
+the bug occurs. Please retest on the live site once this is deployed, and if
+it's still off, send the same console snippet again — the new `finalHash`
+output will tell us whether the hash-strip is even taking effect on your end.
 
 ## Regenerating
 
 ```
-python3 strip_dead_js.py    # idempotent, safe to re-run
-python3 build_slider.py
+python3 build_research.py
 ```
