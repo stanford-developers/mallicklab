@@ -120,6 +120,12 @@ STYLE = """
 
 	/* ---- area ----------------------------------------------------- */
 	.rp-area{padding:0 0 34px; margin:26px 0 34px; border-bottom:1px solid var(--rule); scroll-margin-top:18px}
+	/* Renders nothing and occupies no space, but sits first in the section's
+	   normal flow, so its own top edge coincides with the section's. Any
+	   fragment link lands here at exactly the same position area.scrollIntoView()
+	   would produce. display:none is deliberately avoided: an element with no
+	   box at all cannot be scrolled to by native fragment navigation. */
+	.rp-anchor{display:block; height:0; overflow:hidden; visibility:hidden; scroll-margin-top:18px}
 	.rp-area:last-of-type{border-bottom:0; margin-bottom:0}
 
 	.rp-head{display:flex; gap:26px; align-items:flex-start}
@@ -277,26 +283,22 @@ SCRIPT = """
 		   #ecology-technical also open that summary and jump there. Both the
 		   initial load and later hash changes are handled.
 
-		   Two browser behaviours fight our own scroll correction, so both are
-		   worked around explicitly:
+		   The only remaining wrinkle: a short page cannot be scrolled far
+		   enough to bring a section near the very end of the page to the top
+		   of the viewport, because there is nothing left below it to scroll
+		   into. ensureScrollRoom pads the bottom of the page by exactly the
+		   shortfall, reading scroll-margin-top from the CSS so the two stay in
+		   sync automatically.
 
-		   1. A short page cannot be scrolled far enough to bring a section
-		      near the very end to the top of the viewport (nothing left below
-		      it to scroll into). ensureScrollRoom pads the bottom of the page
-		      by exactly the shortfall.
-
-		   2. Safari can perform its own native scroll-to-fragment on whatever
-		      element has the id in the URL, and it can do this *after* our
-		      correction has already run, silently overriding it. Since the id
-		      is the small tab button (e.g. #ecology-simple), not the section,
-		      that native jump lands on the button rather than the section
-		      top. We strip the hash immediately so Safari has nothing left to
-		      act on, scroll to the right place ourselves, then restore the
-		      hash afterward via replaceState, which does not itself scroll. */
-		var pendingHash = location.hash;
-		if (pendingHash) {
-			history.replaceState(null, '', location.pathname + location.search);
-		}
+		   An earlier version of this fought a second problem: Safari can
+		   perform its own native scroll-to-fragment on whatever element has
+		   the matching id, at any point after navigation, overriding our own
+		   corrected position. That is fixed at the markup level instead of
+		   here: #ecology-simple etc. now name an invisible anchor placed first
+		   in the section, not the visible tab button, so wherever Safari (or
+		   any browser) decides to point a #id link, it lands in the same
+		   place area.scrollIntoView() does. There is no longer a "wrong"
+		   position for a matching id to native-scroll to. */
 		function ensureScrollRoom(el) {
 			var margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
 			var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -308,23 +310,23 @@ SCRIPT = """
 			}
 		}
 		function openFromHash(hash) {
-			var id = (hash || '').replace(/^#/, '');
+			var id = (hash || '').replace(/^#!?/, '');
 			if (!id) { return; }
 			var el = document.getElementById(id);
 			if (!el) { return; }
-			var area = el.classList.contains('rp-tab') ? el.closest('.rp-area') : el;
-			if (!area || !area.classList.contains('rp-area')) { return; }
-			if (el.classList.contains('rp-tab') && area._rpShow
-					&& el.getAttribute('aria-selected') !== 'true') { area._rpShow(el); }
+			var area = el.classList.contains('rp-area') ? el : el.closest('.rp-area');
+			if (!area) { return; }
+			if (el.classList.contains('rp-anchor') && area._rpShow) {
+				var btn = area.querySelector('.rp-tab[data-panel="' + el.dataset.panel + '"]');
+				if (btn && btn.getAttribute('aria-selected') !== 'true') { area._rpShow(btn); }
+			}
 			ensureScrollRoom(area);
 			area.scrollIntoView();
-			history.replaceState(null, '', '#' + id);
 		}
-		openFromHash(pendingHash);
+		openFromHash(location.hash);
 		/* Re-run once images have loaded: they can shift the layout after the
-		   first scroll, leaving the target section off-screen. Uses
-		   pendingHash, not location.hash, since that was cleared above. */
-		window.addEventListener('load', function () { openFromHash(pendingHash); });
+		   first scroll, leaving the target section off-screen. */
+		window.addEventListener('load', function () { openFromHash(location.hash); });
 		window.addEventListener('hashchange', function () { openFromHash(location.hash); });
 	})();
 	</script>
@@ -347,6 +349,15 @@ for s in SECTIONS:
     sid = a['slug']
     parts += [
 f'\t<section class="rp-area" id="{sid}">',
+ '\t\t<!-- Deep-link targets, positioned at the very top of the section rather'
+ ' than on the tab buttons below. A fragment landing on a real, visible,'
+ ' interactive element is something Safari can (and does) re-scroll to on its'
+ ' own at unpredictable times, overriding whatever position our own script'
+ ' set. These anchors are never that: nothing is rendered here, so wherever'
+ ' the browser decides to point a #id link, it lands in the same place our'
+ ' own scrollIntoView does. -->',
+f'\t\t<span class="rp-anchor" id="{sid}-simple" data-panel="simple"></span>',
+f'\t\t<span class="rp-anchor" id="{sid}-technical" data-panel="technical"></span>',
  '\t\t<div class="rp-head">',
 f'\t\t\t<figure class="rp-thumb{thumb_cls}">',
 f'\t\t\t\t<img src="{a["thumb"]}" alt="{esc(a["talt"])}" loading="lazy"{thumb_pos} />',
@@ -357,16 +368,16 @@ f'\t\t\t\t<p class="rp-q">{inline(s["question"])}</p>',
 f'\t\t\t\t<p class="rp-blurb">{inline(s["blurb"])}</p>',
 f'\t\t\t\t<div class="rp-tabs" role="tablist" aria-label="Readings of {esc(s["title"])}">',
  '\t\t\t\t\t<span class="rp-lead" aria-hidden="true">Learn more:</span>',
-f'\t\t\t\t\t<button type="button" class="rp-tab" role="tab" id="{sid}-simple"'
+f'\t\t\t\t\t<button type="button" class="rp-tab" role="tab" id="{sid}-tab-simple" data-panel="simple"'
 f' aria-controls="{sid}-p-simple" aria-selected="false">Simple summary</button>',
-f'\t\t\t\t\t<button type="button" class="rp-tab" role="tab" id="{sid}-technical"'
+f'\t\t\t\t\t<button type="button" class="rp-tab" role="tab" id="{sid}-tab-technical" data-panel="technical"'
 f' aria-controls="{sid}-p-technical" aria-selected="false">Technical summary</button>',
  '\t\t\t\t</div>',
  '\t\t\t\t<div class="rp-panelwrap">',
-f'\t\t\t\t\t<div class="rp-panel rp-lay" role="tabpanel" id="{sid}-p-simple" aria-labelledby="{sid}-simple">',
+f'\t\t\t\t\t<div class="rp-panel rp-lay" role="tabpanel" id="{sid}-p-simple" aria-labelledby="{sid}-tab-simple">',
  '\t\t\t\t\t' + s['lay'],
  '\t\t\t\t\t</div>',
-f'\t\t\t\t\t<div class="rp-panel rp-tech" role="tabpanel" id="{sid}-p-technical" aria-labelledby="{sid}-technical">',
+f'\t\t\t\t\t<div class="rp-panel rp-tech" role="tabpanel" id="{sid}-p-technical" aria-labelledby="{sid}-tab-technical">',
  '\t\t\t\t\t' + s['tech'],
  '\t\t\t\t\t</div>',
  '\t\t\t\t</div>',
